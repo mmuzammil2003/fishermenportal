@@ -1,0 +1,72 @@
+/* Glassmorphism base background */
+.bg-glass {
+    background: rgba(255, 255, 255, 0.6);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  /* Gradient text for titles */
+  .text-gradient {
+    background: linear-gradient(to right, #2563eb, #06b6d4);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* Smooth fade-in animation */
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+      transform: translateY(12px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 0.6s ease-out both;
+  }
+  
+  /* Catch image styling */
+  .catch-image {
+    border-bottom: 2px solid rgba(255, 255, 255, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .inventory-card:hover .catch-image {
+    transform: scale(1.02);
+  }
+  
+  /* Progress bar customization */
+  .progress-bar {
+    border-radius: 9999px;
+    transition: width 0.5s ease-in-out;
+  }
+  
+  /* Stat card hover effect */
+  .stat-card:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Add button hover scale */
+  button:hover {
+    transform: scale(1.02);
+    transition: transform 0.2s ease;
+  }
+  
+  /* Optional: Scrollbar styling for modern feel */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+  ::-webkit-scrollbar-thumb {
+    background: linear-gradient(to bottom, #2563eb, #06b6d4);
+    border-radius: 4px;
+  }
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  

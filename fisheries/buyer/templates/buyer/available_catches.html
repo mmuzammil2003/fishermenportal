@@ -1,0 +1,245 @@
+{% extends "buyer/base.html" %}
+
+{% block buyer_content %}
+<div class="space-y-6">
+    <!-- Filters -->
+    <div class="bg-white shadow rounded-lg">
+        <div class="px-4 py-5 sm:p-6">
+            <form method="get" class="space-y-4">
+                <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
+                    <!-- Fish Type Filter -->
+                    <div>
+                        <label for="fish_type" class="block text-sm font-medium text-gray-700">Fish Type</label>
+                        <select id="fish_type" name="fish_type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                            <option value="">All Types</option>
+                            {% for type in fish_types %}
+                            <option value="{{ type }}" {% if current_filters.fish_type == type %}selected{% endif %}>{{ type }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Quality Grade Filter -->
+                    <div>
+                        <label for="quality_grade" class="block text-sm font-medium text-gray-700">Quality Grade</label>
+                        <select id="quality_grade" name="quality_grade" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                            <option value="">All Grades</option>
+                            {% for grade in quality_grades %}
+                            <option value="{{ grade }}" {% if current_filters.quality_grade == grade %}selected{% endif %}>{{ grade }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+
+                    <!-- Price Range -->
+                    <div>
+                        <label for="min_price" class="block text-sm font-medium text-gray-700">Min Price</label>
+                        <input type="number" id="min_price" name="min_price" value="{{ current_filters.min_price }}"
+                               class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+                               placeholder="Min Price">
+                    </div>
+
+                    <div>
+                        <label for="max_price" class="block text-sm font-medium text-gray-700">Max Price</label>
+                        <input type="number" id="max_price" name="max_price" value="{{ current_filters.max_price }}"
+                               class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
+                               placeholder="Max Price">
+                    </div>
+                </div>
+
+                <!-- Sort Options -->
+                <div class="flex justify-between items-end">
+                    <div class="w-48">
+                        <label for="sort_by" class="block text-sm font-medium text-gray-700">Sort By</label>
+                        <select id="sort_by" name="sort_by" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                            <option value="-timestamp" {% if current_filters.sort_by == '-timestamp' %}selected{% endif %}>Newest First</option>
+                            <option value="timestamp" {% if current_filters.sort_by == 'timestamp' %}selected{% endif %}>Oldest First</option>
+                            <option value="price_per_kg" {% if current_filters.sort_by == 'price_per_kg' %}selected{% endif %}>Price: Low to High</option>
+                            <option value="-price_per_kg" {% if current_filters.sort_by == '-price_per_kg' %}selected{% endif %}>Price: High to Low</option>
+                            <option value="weight" {% if current_filters.sort_by == 'weight' %}selected{% endif %}>Weight: Low to High</option>
+                            <option value="-weight" {% if current_filters.sort_by == '-weight' %}selected{% endif %}>Weight: High to Low</option>
+                        </select>
+                    </div>
+
+                    <div class="flex space-x-2">
+                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                            Apply Filters
+                        </button>
+                        <a href="{% url 'buyer:available_catches' %}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                            Clear Filters
+                        </a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Catches Grid -->
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {% for catch in catches %}
+        <div class="bg-white overflow-hidden shadow rounded-lg">
+            {% if catch.photo %}
+            <img src="{{ catch.photo.url }}" alt="{{ catch.fish_type }}" class="w-full h-48 object-cover">
+            {% else %}
+            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
+                <svg class="h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
+                </svg>
+            </div>
+            {% endif %}
+
+            <div class="px-4 py-5 sm:p-6">
+                <h3 class="text-lg font-medium text-gray-900">{{ catch.fish_type }}</h3>
+                <div class="mt-2 max-w-xl text-sm text-gray-500">
+                    <p>Quality: {{ catch.quality_grade }}</p>
+                    <p>Weight: {{ catch.weight }} kg</p>
+                    <p>Price: ${{ catch.price_per_kg }}/kg</p>
+                    <p>Total Value: ${{ catch.weight|multiply:catch.price_per_kg }}</p>
+                    <p>Location: {{ catch.location }}</p>
+                    <p>Caught by: {{ catch.fisher.username }}</p>
+                </div>
+
+                <div class="mt-4">
+                    <button type="button" onclick="openOrderModal('{{ catch.id }}', '{{ catch.fish_type }}', {{ catch.weight }}, {{ catch.price_per_kg }})"
+                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                        Place Order
+                    </button>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-span-full text-center py-12 bg-white rounded-lg shadow">
+            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <h3 class="mt-2 text-sm font-medium text-gray-900">No catches available</h3>
+            <p class="mt-1 text-sm text-gray-500">Try adjusting your filters or check back later.</p>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Pagination -->
+    {% if catches.has_other_pages %}
+    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 rounded-lg shadow">
+        <div class="flex-1 flex justify-between sm:hidden">
+            {% if catches.has_previous %}
+            <a href="?page={{ catches.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                Previous
+            </a>
+            {% endif %}
+            {% if catches.has_next %}
+            <a href="?page={{ catches.next_page_number }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                Next
+            </a>
+            {% endif %}
+        </div>
+        <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
+            <div>
+                <p class="text-sm text-gray-700">
+                    Showing <span class="font-medium">{{ catches.start_index }}</span> to
+                    <span class="font-medium">{{ catches.end_index }}</span> of
+                    <span class="font-medium">{{ catches.paginator.count }}</span> results
+                </p>
+            </div>
+            <div>
+                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                    {% if catches.has_previous %}
+                    <a href="?page={{ catches.previous_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                        <span class="sr-only">Previous</span>
+                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                    {% endif %}
+
+                    {% for i in catches.paginator.page_range %}
+                    <a href="?page={{ i }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium {% if catches.number == i %}text-blue-600 bg-blue-50{% else %}text-gray-700 hover:bg-gray-50{% endif %}">
+                        {{ i }}
+                    </a>
+                    {% endfor %}
+
+                    {% if catches.has_next %}
+                    <a href="?page={{ catches.next_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                        <span class="sr-only">Next</span>
+                        <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
+                            <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
+                        </svg>
+                    </a>
+                    {% endif %}
+                </nav>
+            </div>
+        </div>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Order Modal -->
+<div id="orderModal" class="hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+    <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
+        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
+        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+            <form id="orderForm" method="post" action="">
+                {% csrf_token %}
+                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
+                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                                Place Order
+                            </h3>
+                            <div class="mt-4 space-y-4">
+                                <div>
+                                    <label for="quantity" class="block text-sm font-medium text-gray-700">
+                                        Quantity (kg)
+                                    </label>
+                                    <input type="number" name="quantity" id="quantity" step="0.1" min="0.1"
+                                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
+                                           required>
+                                    <p class="mt-1 text-sm text-gray-500">Available: <span id="availableWeight"></span> kg</p>
+                                </div>
+                                <div>
+                                    <p class="text-sm text-gray-500">Price per kg: $<span id="pricePerKg"></span></p>
+                                    <p class="text-sm font-medium text-gray-900">Total Price: $<span id="totalPrice">0.00</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                        Confirm Order
+                    </button>
+                    <button type="button" onclick="closeOrderModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                        Cancel
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+function openOrderModal(catchId, fishType, weight, pricePerKg) {
+    const modal = document.getElementById('orderModal');
+    const form = document.getElementById('orderForm');
+    const quantityInput = document.getElementById('quantity');
+    const availableWeight = document.getElementById('availableWeight');
+    const pricePerKgSpan = document.getElementById('pricePerKg');
+    const totalPriceSpan = document.getElementById('totalPrice');
+
+    modal.classList.remove('hidden');
+    form.action = `/buyer/create-order/${catchId}/`;
+    availableWeight.textContent = weight;
+    pricePerKgSpan.textContent = pricePerKg;
+    quantityInput.max = weight;
+
+    quantityInput.addEventListener('input', function() {
+        const quantity = parseFloat(this.value) || 0;
+        totalPriceSpan.textContent = (quantity * pricePerKg).toFixed(2);
+    });
+}
+
+function closeOrderModal() {
+    const modal = document.getElementById('orderModal');
+    modal.classList.add('hidden');
+}
+</script>
+{% endblock %} 

@@ -1,0 +1,788 @@
+/* base-styles.css - Core styling and layout */
+
+/* Import Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+/* Global Reset and Base Styles */
+* {
+    font-family: 'Inter', sans-serif;
+    box-sizing: border-box;
+}
+
+/* Body Background */
+body {
+    background: linear-gradient(135deg, 
+        #f8fafc 0%, 
+        #e2e8f0 25%, 
+        #cbd5e1 50%, 
+        #e2e8f0 75%, 
+        #f8fafc 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
+}
+
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Container Styles */
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 1rem;
+}
+
+/* Grid Layout */
+.pricing-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 1.5rem;
+    margin-top: 2rem;
+}
+
+/* Responsive Grid */
+@media (max-width: 768px) {
+    .pricing-grid {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+}
+
+/* Scrollbar Styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: rgba(248, 250, 252, 0.5);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(135deg, #3b82f6, #10b981);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(135deg, #1d4ed8, #059669);
+}
+
+/* header-styles.css - Page header and title styling */
+
+/* Page Header Container */
+.mb-8 {
+    position: relative;
+    padding: 2rem;
+    background: linear-gradient(135deg, 
+        rgba(255, 255, 255, 0.9) 0%, 
+        rgba(255, 255, 255, 0.7) 100%);
+    backdrop-filter: blur(10px);
+    border-radius: 20px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    margin-bottom: 2rem !important;
+    animation: slideInDown 0.8s ease-out;
+}
+
+/* Animated Top Border */
+.mb-8::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #3b82f6, #10b981, #f59e0b, #ef4444);
+    border-radius: 20px 20px 0 0;
+    animation: shimmer 3s ease-in-out infinite;
+}
+
+@keyframes shimmer {
+    0%, 100% { opacity: 0.6; }
+    50% { opacity: 1; }
+}
+
+/* Main Title */
+.text-3xl {
+    background: linear-gradient(135deg, #1e293b 0%, #0f766e 50%, #1e40af 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    position: relative;
+    margin: 0;
+    line-height: 1.2;
+}
+
+/* Subtitle */
+.text-slate-500 {
+    color: #64748b !important;
+    font-size: 1.1rem;
+    font-weight: 400;
+    margin-top: 0.5rem;
+}
+
+/* Animation */
+@keyframes slideInDown {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .mb-8 {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem !important;
+    }
+    
+    .text-3xl {
+        font-size: 1.8rem !important;
+    }
+    
+    .text-slate-500 {
+        font-size: 1rem;
+    }
+}
+
+/* card-styles.css - Card components and layouts */
+
+/* Base Card Styles */
+.bg-white {
+    background: linear-gradient(145deg, 
+        rgba(255, 255, 255, 0.95) 0%, 
+        rgba(255, 255, 255, 0.9) 100%) !important;
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(148, 163, 184, 0.2) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1), 
+                0 1px 8px rgba(0, 0, 0, 0.06) !important;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    animation: slideInUp 0.8s ease-out;
+}
+
+/* Card Hover Effects */
+.bg-white:hover {
+    transform: translateY(-8px) scale(1.02);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15), 
+                0 8px 32px rgba(59, 130, 246, 0.1) !important;
+    border-color: rgba(59, 130, 246, 0.3) !important;
+}
+
+/* Card Headers */
+.bg-white h2 {
+    position: relative;
+    display: flex;
+    align-items: center;
+    font-weight: 600;
+    color: #1e293b;
+    margin-bottom: 1rem;
+}
+
+/* Card Header Icons */
+.bg-white h2::before {
+    content: '';
+    display: inline-block;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    margin-right: 12px;
+    background: linear-gradient(135deg, #3b82f6, #10b981);
+    box-shadow: 0 0 10px rgba(59, 130, 246, 0.4);
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); opacity: 1; }
+    50% { transform: scale(1.2); opacity: 0.8; }
+}
+
+/* Staggered Animation for Cards */
+.grid > div:nth-child(1) { animation-delay: 0.1s; }
+.grid > div:nth-child(2) { animation-delay: 0.2s; }
+.grid > div:nth-child(3) { animation-delay: 0.3s; }
+.grid > div:nth-child(4) { animation-delay: 0.4s; }
+
+/* Card Animation */
+@keyframes slideInUp {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Mobile Card Adjustments */
+@media (max-width: 1024px) {
+    .bg-white:hover {
+        transform: translateY(-4px) scale(1.01);
+    }
+}
+
+@media (max-width: 768px) {
+    .bg-white {
+        padding: 1rem !important;
+    }
+}
+/* chart-styles.css - Price chart styling */
+
+/* Chart Container */
+.h-80.bg-slate-50 {
+    background: linear-gradient(135deg, 
+        rgba(59, 130, 246, 0.05) 0%, 
+        rgba(16, 185, 129, 0.05) 50%, 
+        rgba(245, 158, 11, 0.05) 100%) !important;
+    border: 1px solid rgba(59, 130, 246, 0.1);
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    transition: all 0.3s ease;
+}
+
+/* Scanning Animation */
+.h-80.bg-slate-50::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(59, 130, 246, 0.1), 
+        transparent);
+    animation: scan 3s ease-in-out infinite;
+}
+
+@keyframes scan {
+    0% { left: -100%; }
+    100% { left: 100%; }
+}
+
+/* Chart Placeholder Text */
+.h-80 p {
+    position: relative;
+    color: #64748b;
+    font-weight: 500;
+    z-index: 10;
+    animation: fadeInOut 2s ease-in-out infinite;
+    text-align: center;
+    font-size: 1rem;
+}
+
+@keyframes fadeInOut {
+    0%, 100% { opacity: 0.5; }
+    50% { opacity: 1; }
+}
+
+/* Chart Container Hover */
+.h-80.bg-slate-50:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.1);
+}
+
+/* Chart Grid Lines (for future chart implementation) */
+.chart-grid {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0.1;
+    background-image: 
+        linear-gradient(rgba(59, 130, 246, 0.3) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(59, 130, 246, 0.3) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Loading Dots Animation */
+.chart-loading::after {
+    content: '';
+    display: inline-block;
+    animation: loadingDots 1.5s infinite;
+}
+
+@keyframes loadingDots {
+    0%, 20% { content: '.'; }
+    40% { content: '..'; }
+    60%, 100% { content: '...'; }
+}
+/* price-styles.css - Price display components */
+
+/* Price Item Container */
+.bg-slate-50 {
+    background: linear-gradient(135deg, 
+        rgba(248, 250, 252, 0.8) 0%, 
+        rgba(241, 245, 249, 0.6) 100%) !important;
+    border: 1px solid rgba(203, 213, 225, 0.3);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+/* Left Border Indicator */
+.bg-slate-50::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: linear-gradient(180deg, #10b981, #059669);
+    transform: scaleY(0);
+    transition: transform 0.3s ease;
+}
+
+/* Price Item Hover Effects */
+.bg-slate-50:hover {
+    background: linear-gradient(135deg, 
+        rgba(16, 185, 129, 0.1) 0%, 
+        rgba(16, 185, 129, 0.05) 100%) !important;
+    transform: translateX(8px);
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    border-color: rgba(16, 185, 129, 0.3);
+}
+
+.bg-slate-50:hover::before {
+    transform: scaleY(1);
+}
+
+/* Fish Names */
+.bg-slate-50 .font-medium {
+    color: #334155;
+    font-weight: 500;
+    font-size: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+/* Price Values */
+.text-green-600 {
+    background: linear-gradient(135deg, #10b981, #059669);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    font-weight: 700 !important;
+    text-shadow: 0 0 10px rgba(16, 185, 129, 0.3);
+    position: relative;
+    font-size: 1.1rem;
+}
+
+/* Price Trend Arrow */
+.text-green-600::after {
+    content: '↗';
+    position: absolute;
+    right: -20px;
+    top: -2px;
+    font-size: 0.8em;
+    color: #10b981;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.bg-slate-50:hover .text-green-600::after {
+    opacity: 1;
+}
+
+/* Price Animation */
+.text-green-600 {
+    animation: priceGlow 3s ease-in-out infinite;
+}
+
+@keyframes priceGlow {
+    0%, 100% { 
+        filter: brightness(1);
+        text-shadow: 0 0 5px rgba(16, 185, 129, 0.2);
+    }
+    50% { 
+        filter: brightness(1.1);
+        text-shadow: 0 0 10px rgba(16, 185, 129, 0.4);
+    }
+}
+
+/* Price Item Spacing */
+.space-y-4 > * + * {
+    margin-top: 1rem;
+}
+
+/* Fish Emojis Animation */
+.bg-slate-50:hover .font-medium {
+    animation: fishSwim 0.5s ease-in-out;
+}
+
+@keyframes fishSwim {
+    0%, 100% { transform: translateX(0); }
+    50% { transform: translateX(3px); }
+}
+/* form-styles.css - Form inputs and controls */
+
+/* Form Labels */
+.text-slate-700 {
+    color: #334155 !important;
+    font-weight: 500;
+    font-size: 0.875rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.5rem;
+}
+
+/* Input and Select Base Styles */
+.border-slate-300 {
+    border: 1px solid rgba(203, 213, 225, 0.4) !important;
+    background: rgba(248, 250, 252, 0.8);
+    transition: all 0.3s ease;
+    position: relative;
+    border-radius: 8px;
+    padding: 0.75rem;
+    font-size: 0.95rem;
+    color: #1e293b;
+}
+
+/* Focus States */
+.border-slate-300:focus {
+    border-color: #3b82f6 !important;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+    background: rgba(255, 255, 255, 0.9);
+    outline: none;
+    transform: translateY(-1px);
+}
+
+/* Placeholder Styling */
+.border-slate-300::placeholder {
+    color: rgba(100, 116, 139, 0.6);
+    font-style: italic;
+}
+
+/* Select Dropdown Arrow */
+select.border-slate-300 {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 0.5rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 2.5rem;
+    appearance: none;
+}
+
+/* Input Hover Effects */
+.border-slate-300:hover {
+    border-color: rgba(59, 130, 246, 0.3);
+    background: rgba(255, 255, 255, 0.95);
+}
+
+/* Form Spacing */
+.space-y-4 > * + * {
+    margin-top: 1rem;
+}
+
+/* Input Validation States */
+.border-slate-300:valid {
+    border-color: rgba(16, 185, 129, 0.5);
+}
+
+.border-slate-300:invalid:not(:focus) {
+    border-color: rgba(239, 68, 68, 0.5);
+}
+
+/* Number Input Styling */
+input[type="number"].border-slate-300 {
+    -moz-appearance: textfield;
+}
+
+input[type="number"].border-slate-300::-webkit-outer-spin-button,
+input[type="number"].border-slate-300::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Custom Input Focus Ring */
+.border-slate-300:focus-visible {
+    outline: 2px solid #3b82f6;
+    outline-offset: 2px;
+}
+
+/* button-styles.css - Button styling and interactions */
+
+/* Primary Button */
+.bg-emerald-600 {
+    background: linear-gradient(135deg, #10b981 0%, #059669 100%) !important;
+    box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+    position: relative;
+    overflow: hidden;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    border: none;
+    border-radius: 8px;
+    color: white;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    cursor: pointer;
+}
+
+/* Button Shimmer Effect */
+.bg-emerald-600::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, 
+        transparent, 
+        rgba(255, 255, 255, 0.3), 
+        transparent);
+    transition: left 0.5s ease;
+}
+
+/* Button Hover Effects */
+.bg-emerald-600:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px rgba(16, 185, 129, 0.4) !important;
+    background: linear-gradient(135deg, #059669 0%, #047857 100%) !important;
+}
+
+.bg-emerald-600:hover::before {
+    left: 100%;
+}
+
+/* Button Active State */
+.bg-emerald-600:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(16, 185, 129, 0.3);
+}
+
+/* Button Focus State */
+.bg-emerald-600:focus {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.3);
+}
+
+/* Button Loading State */
+.bg-emerald-600.loading {
+    pointer-events: none;
+    opacity: 0.7;
+}
+
+.bg-emerald-600.loading::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 16px;
+    height: 16px;
+    margin: -8px 0 0 -8px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top: 2px solid white;
+    border-radius: 50%;
+    animation: buttonSpin 1s linear infinite;
+}
+
+@keyframes buttonSpin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Button Text */
+.bg-emerald-600 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+
+/* Button Disabled State */
+.bg-emerald-600:disabled {
+    background: #9ca3af !important;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+
+.bg-emerald-600:disabled:hover {
+    transform: none;
+    box-shadow: none;
+}
+
+/* Button Ripple Effect */
+.bg-emerald-600 {
+    position: relative;
+    overflow: hidden;
+}
+
+.bg-emerald-600::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.3s, height 0.3s;
+}
+
+.bg-emerald-600:active::after {
+    width: 300px;
+    height: 300px;
+}
+/* insight-styles.css - Market insights and notification cards */
+
+/* Base Insight Card Styles */
+.bg-blue-50, .bg-green-50 {
+    border-radius: 12px;
+    padding: 1rem;
+    position: relative;
+    transition: all 0.3s ease;
+    border-left: 4px solid;
+    margin-bottom: 1rem;
+}
+
+/* Blue Insight Card (Trends) */
+.bg-blue-50 {
+    background: linear-gradient(135deg, 
+        rgba(59, 130, 246, 0.1) 0%, 
+        rgba(59, 130, 246, 0.05) 100%) !important;
+    border-left-color: #3b82f6;
+    color: #1e40af !important;
+}
+
+/* Green Insight Card (Supply Updates) */
+.bg-green-50 {
+    background: linear-gradient(135deg, 
+        rgba(16, 185, 129, 0.1) 0%, 
+        rgba(16, 185, 129, 0.05) 100%) !important;
+    border-left-color: #10b981;
+    color: #065f46 !important;
+}
+
+/* Insight Card Hover Effects */
+.bg-blue-50:hover, .bg-green-50:hover {
+    transform: translateX(8px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.bg-blue-50:hover {
+    box-shadow: 0 4px 12px rgba(59, 130, 246, 0.2);
+    border-left-color: #1d4ed8;
+}
+
+.bg-green-50:hover {
+    box-shadow: 0 4px 12px rgba(16, 185, 129, 0.2);
+    border-left-color: #059669;
+}
+
+/* Insight Titles */
+.bg-blue-50 h3, .bg-green-50 h3 {
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    font-size: 1rem;
+}
+
+/* Insight Icons */
+.bg-blue-50 h3::before {
+    content: '📈';
+    margin-right: 8px;
+    font-size: 1.2em;
+    animation: trendPulse 2s ease-in-out infinite;
+}
+
+.bg-green-50 h3::before {
+    content: '📊';
+    margin-right: 8px;
+    font-size: 1.2em;
+    animation: dataPulse 2s ease-in-out infinite;
+}
+
+@keyframes trendPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.1); }
+}
+
+@keyframes dataPulse {
+    0%, 100% { transform: scale(1) rotate(0deg); }
+    50% { transform: scale(1.05) rotate(5deg); }
+}
+
+/* Insight Text */
+.bg-blue-50 p, .bg-green-50 p {
+    font-size: 0.875rem;
+    line-height: 1.5;
+    margin: 0;
+    opacity: 0.9;
+}
+
+.bg-blue-50 p {
+    color: #1e40af;
+}
+
+.bg-green-50 p {
+    color: #065f46;
+}
+
+/* Insight Priority Indicator */
+.bg-blue-50::after {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 8px;
+    height: 8px;
+    background: #3b82f6;
+    border-radius: 50%;
+    animation: priorityBlink 3s ease-in-out infinite;
+}
+
+.bg-green-50::after {
+    content: '';
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    width: 8px;
+    height: 8px;
+    background: #10b981;
+    border-radius: 50%;
+    animation: priorityBlink 3s ease-in-out infinite;
+}
+
+@keyframes priorityBlink {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 1; }
+}
+
+/* Insight Card Spacing */
+.space-y-4 > .bg-blue-50 + .bg-green-50,
+.space-y-4 > .bg-green-50 + .bg-blue-50 {
+    margin-top: 1rem;
+}
+
+/* Mobile Responsiveness */
+@media (max-width: 768px) {
+    .bg-blue-50, .bg-green-50 {
+        padding: 0.875rem;
+        margin-bottom: 0.75rem;
+    }
+    
+    .bg-blue-50:hover, .bg-green-50:hover {
+        transform: translateX(4px);
+    }
+}
