@@ -1,4 +1,8 @@
+# fishportal/urls.py
+
 from django.urls import path
+from .views import DashboardView
+
 urlpatterns = [
-    path('',),
+    path('', DashboardView.as_view(), name='dashboard'),
 ]
