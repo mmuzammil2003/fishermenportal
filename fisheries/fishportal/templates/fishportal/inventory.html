@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="space-y-8 p-6">
+
+  <div class="flex justify-between items-center">
+    <div>
+      <h2 class="text-3xl font-bold bg-gradient-to-r from-slate-900 to-slate-700 bg-clip-text text-transparent mb-2">
+        Inventory Management
+      </h2>
+      <p class="text-slate-600 text-lg">Monitor your catches and marketplace performance</p>
+    </div>
+    <button class="h-12 px-6 bg-gradient-to-r from-blue-600 to-cyan-600 hover:from-blue-700 hover:to-cyan-700 text-white font-semibold rounded-xl shadow-lg shadow-blue-500/25 flex items-center">
+      <svg class="h-5 w-5 mr-2" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24">
+        <path d="M12 4v16m8-8H4" />
+      </svg>
+      Add New Catch
+    </button>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+    {% for stat in stats %}
+    <div class="border-0 shadow-lg shadow-slate-200/50 bg-white/80 backdrop-blur-xl rounded-xl p-6">
+      <div class="flex items-center justify-between mb-4">
+        <div class="h-12 w-12 rounded-xl bg-gradient-to-br from-{{ stat.color }}-500 to-{{ stat.color }}-600 flex items-center justify-center">
+          {{ stat.icon|safe }}
+        </div>
+        <span class="text-sm font-semibold bg-{{ stat.color }}-50 text-{{ stat.color }}-700 border border-{{ stat.color }}-200 rounded px-2 py-1">
+          {{ stat.change }}
+        </span>
+      </div>
+      <p class="text-sm text-slate-600 mb-1">{{ stat.title }}</p>
+      <p class="text-2xl font-bold text-slate-900">{{ stat.value }}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+  <!-- Inventory Grid -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+    {% for item in inventory %}
+    <div class="border-0 shadow-lg bg-white/80 backdrop-blur-xl rounded-xl overflow-hidden hover:shadow-xl transition-all duration-300">
+      <div class="relative">
+        <img src="{{ item.image|default:'/placeholder.svg' }}" alt="{{ item.fishType }}" class="w-full h-56 object-cover transition-transform duration-500">
+        <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+        <span class="absolute top-4 left-4 px-3 py-1 text-white font-medium rounded shadow-lg {% if item.status == 'Available' %}bg-emerald-500{% else %}bg-slate-500{% endif %}">
+          {{ item.status }}
+        </span>
+        <div class="absolute bottom-4 left-4 right-4 text-white">
+          <h3 class="text-lg font-bold">{{ item.fishType }}</h3>
+          <p class="text-sm flex items-center gap-1"><svg class="h-4 w-4" ...></svg>{{ item.location }}</p>
+        </div>
+      </div>
+      <div class="p-6 space-y-4">
+        <div class="flex justify-between">
+          <span class="text-slate-600">Weight</span>
+          <span class="font-semibold">{{ item.weight }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-600">Quality</span>
+          <span class="text-blue-700 bg-blue-50 border border-blue-200 rounded px-2 py-1">{{ item.quality }}</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-600">Price</span>
+          <span class="text-emerald-600 font-bold">${{ item.price }}/kg</span>
+        </div>
+        <div class="space-y-2">
+          <div class="flex justify-between text-sm">
+            <span class="text-slate-600">Freshness</span>
+            <span class="font-medium">{{ item.freshness }}%</span>
+          </div>
+          <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+            <div class="bg-emerald-500 h-2" style="width: {{ item.freshness }}%"></div>
+          </div>
+        </div>
+        <div class="flex justify-between text-sm text-slate-600">
+          <span>{{ item.views }} views</span>
+          <span>{{ item.likes }} likes</span>
+        </div>
+        <div class="flex gap-3 mt-4">
+          <button class="flex-1 border border-slate-300 rounded px-3 py-1 text-sm">Analytics</button>
+          <button class="flex-1 border border-slate-300 rounded px-3 py-1 text-sm">Edit</button>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endblock %}
