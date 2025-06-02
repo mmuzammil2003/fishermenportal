@@ -4,8 +4,8 @@ from . import views
 app_name = 'fishportal'
 
 urlpatterns = [
-    path('', views.HomeView.as_view(), name='home'),
-    path('inventory/', views.InventoryView.as_view(), name='inventory'),
-    path('upload-catch/', views.UploadCatchView.as_view(), name='upload_catch'),
-    path('pricing-trends/', views.PricingTrendsView.as_view(), name='pricing_trends'),
+    path('', views.home, name='home'),
+    path('upload-catch/', views.upload_catch, name='upload_catch'),
+    path('inventory/', views.inventory, name='inventory'),
+    path('pricing-trends/', views.pricing_trends, name='pricing_trends'),
 ]

@@ -1,0 +1,71 @@
+{% extends 'fishportal/base.html' %}
+{% block content %}
+<div class="max-w-7xl mx-auto p-6 space-y-6">
+    <!-- Welcome Section -->
+    <div>
+        <h2 class="text-2xl font-bold mb-2">
+            Welcome back, {{ user_name }}!
+        </h2>
+        <p class="text-slate-600">Here's your marketplace activity</p>
+    </div>
+
+    <!-- Stats -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        {% for stat in stats %}
+        <div class="border border-slate-200 rounded-lg bg-white shadow-sm">
+            <div class="p-6 flex items-center justify-between">
+                <div>
+                    <p class="text-sm text-slate-600 mb-1">{{ stat.title }}</p>
+                    <p class="text-2xl font-bold text-slate-900">{{ stat.value }}</p>
+                </div>
+                <div class="p-3 rounded-lg bg-{{ stat.color }}-100">
+                    <img src="{{ stat.icon_url }}" alt="icon" class="h-6 w-6 text-{{ stat.color }}-600" />
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <!-- Recent Activity and Quick Actions -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <!-- Recent Activity -->
+        <div class="border border-slate-200 rounded-lg bg-white">
+            <div class="bg-slate-50 border-b border-slate-200 px-6 py-4 font-semibold">Recent Activity</div>
+            <div class="p-6 space-y-4">
+                {% for activity in recent_activities %}
+                <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+                    <div class="h-2 w-2 bg-blue-500 rounded-full"></div>
+                    <div class="flex-1">
+                        <p class="text-sm font-medium text-slate-900">{{ activity.description }}</p>
+                        <p class="text-xs text-slate-500">{{ activity.time_ago }}</p>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Quick Actions -->
+        <div class="border border-slate-200 rounded-lg bg-white">
+            <div class="bg-slate-50 border-b border-slate-200 px-6 py-4 font-semibold">Quick Actions</div>
+            <div class="p-6 grid grid-cols-2 gap-3">
+                <a href="{% url 'marketplace' %}" class="h-20 border rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-slate-50">
+                    <img src="{% static 'icons/shopping-cart.svg' %}" class="h-5 w-5" />
+                    <span class="text-xs">Browse Fish</span>
+                </a>
+                <a href="{% url 'orders' %}" class="h-20 border rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-slate-50">
+                    <img src="{% static 'icons/package.svg' %}" class="h-5 w-5" />
+                    <span class="text-xs">My Orders</span>
+                </a>
+                <a href="{% url 'pricing' %}" class="h-20 border rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-slate-50">
+                    <img src="{% static 'icons/trending-up.svg' %}" class="h-5 w-5" />
+                    <span class="text-xs">Price Trends</span>
+                </a>
+                <a href="{% url 'messages' %}" class="h-20 border rounded-lg flex flex-col items-center justify-center gap-2 hover:bg-slate-50">
+                    <img src="{% static 'icons/message-circle.svg' %}" class="h-5 w-5" />
+                    <span class="text-xs">Messages</span>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,5 +1,9 @@
+from django.shortcuts import render
+from django.contrib.auth.decorators import login_required
+from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
 
+@method_decorator(login_required, name='dispatch')
 class HomeView(TemplateView):
     template_name = 'fishportal/home.html'
     
@@ -13,16 +17,18 @@ class HomeView(TemplateView):
         })
         return context
 
+@method_decorator(login_required, name='dispatch')
 class UploadCatchView(TemplateView):
     template_name = 'fishportal/upload_catch.html'
 
+@method_decorator(login_required, name='dispatch')
 class InventoryView(TemplateView):
     template_name = 'fishportal/inventory.html'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         
-        # Stats data with simpler icons
+        # Stats data
         context['stats'] = [
             {
                 'title': 'Total Catch',
@@ -93,9 +99,9 @@ class InventoryView(TemplateView):
                 'image': 'https://placehold.co/600x400/png?text=Cod'
             }
         ]
-        
         return context
 
+@method_decorator(login_required, name='dispatch')
 class PricingTrendsView(TemplateView):
     template_name = 'fishportal/pricing_trends.html'
     
@@ -108,3 +114,9 @@ class PricingTrendsView(TemplateView):
             {'fish': 'Halibut', 'price': 52}
         ]
         return context
+
+# Function-based views for URL patterns
+home = HomeView.as_view()
+upload_catch = UploadCatchView.as_view()
+inventory = InventoryView.as_view()
+pricing_trends = PricingTrendsView.as_view()

@@ -16,9 +16,16 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.auth import views as auth_views
+from buyer.views import register_view, role_redirect
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('fishportal.urls')),  # Include fishportal URLs at root path
+    path('', role_redirect, name='role_redirect'),
+    path('login/', auth_views.LoginView.as_view(), name='login'),
+    path('logout/', auth_views.LogoutView.as_view(), name='logout'),
+    path('register/', register_view, name='register'),
+    path('fisher/', include('fishportal.urls')),
+    path('buyer/', include('buyer.urls')),
 ]
 
