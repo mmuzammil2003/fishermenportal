@@ -3,15 +3,13 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from .models import CustomUser
-from django.urls import reverse
 
-# Create your views here.
-
+# Registration view
 def register_view(request):
     user_type = request.GET.get('type', '').upper()
     if user_type not in ['FISHER', 'BUYER']:
         return redirect('login')
-    
+
     if request.method == 'POST':
         username = request.POST.get('username')
         email = request.POST.get('email')
@@ -42,16 +40,32 @@ def register_view(request):
 
     return render(request, 'registration/register.html', {'user_type': user_type})
 
+# Role redirect view
 @login_required
 def role_redirect(request):
     if request.user.is_fisher():
-        return redirect('fishportal:home')
+        return redirect('market')  # Fisher redirected to market view
     elif request.user.is_buyer():
-        return redirect('buyer:dashboard')
+        return redirect('buyers')  # Buyer redirected to buyers view
     return redirect('login')
 
+# Buyer dashboard view (if needed)
 @login_required
-def dashboard(request):
+def dashboard_view(request):
     if not request.user.is_buyer():
-        return redirect('fishportal:home')
-    return render(request, 'buyer/dashboard.html')
+        return redirect('login')  # Prevent unauthorized access
+    return render(request, 'dashboard.html')
+
+# Buyers.html view
+@login_required
+def buyers_view(request):
+    if not request.user.is_buyer():
+        return redirect('login')
+    return render(request, 'buyers.html')
+
+# Market.html view
+@login_required
+def market_view(request):
+    if not request.user.is_fisher():
+        return redirect('login')
+    return render(request, 'market.html')
