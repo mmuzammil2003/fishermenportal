@@ -1,6 +1,7 @@
-{% extends "fishportal/base.html" %}
-{% block content %}
+{% extends "base.html" %}
+{% load static %}
 
+{% block content %}
 <div class="mb-8">
   <h1 class="text-3xl font-bold text-slate-800">Fisherman Dashboard</h1>
   <p class="text-slate-500 mt-1">Welcome back! Here's your catch summary</p>
@@ -12,36 +13,36 @@
   <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm flex items-center justify-between">
     <div>
       <p class="text-slate-500 text-sm">Total Catch</p>
-      <h2 class="text-2xl font-bold text-slate-800">156 kg</h2>
+      <h2 class="text-2xl font-bold text-slate-800">{{ total_catch }} kg</h2>
     </div>
-    <i data-feather="fish" class="w-6 h-6 text-green-500"></i>
+    <span class="text-2xl">🐟</span>
   </div>
 
   <!-- Revenue -->
   <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm flex items-center justify-between">
     <div>
       <p class="text-slate-500 text-sm">Revenue</p>
-      <h2 class="text-2xl font-bold text-green-600">$2,340</h2>
+      <h2 class="text-2xl font-bold text-green-600">${{ revenue }}</h2>
     </div>
-    <i data-feather="dollar-sign" class="w-6 h-6 text-green-500"></i>
+    <span class="text-2xl">💰</span>
   </div>
 
   <!-- Active Listings -->
   <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm flex items-center justify-between">
     <div>
       <p class="text-slate-500 text-sm">Active Listings</p>
-      <h2 class="text-2xl font-bold text-slate-800">12</h2>
+      <h2 class="text-2xl font-bold text-slate-800">{{ active_listings }}</h2>
     </div>
-    <i data-feather="box" class="w-6 h-6 text-blue-500"></i>
+    <span class="text-2xl">📦</span>
   </div>
 
   <!-- Rating -->
   <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm flex items-center justify-between">
     <div>
       <p class="text-slate-500 text-sm">Rating</p>
-      <h2 class="text-2xl font-bold text-yellow-500">4.8</h2>
+      <h2 class="text-2xl font-bold text-yellow-500">{{ rating }}</h2>
     </div>
-    <i data-feather="star" class="w-6 h-6 text-yellow-500"></i>
+    <span class="text-2xl">⭐</span>
   </div>
 </div>
 
@@ -61,21 +62,16 @@
   <div class="bg-white border border-slate-200 rounded-lg shadow-sm p-5">
     <h3 class="text-lg font-semibold text-slate-800 mb-4">Quick Actions</h3>
     <div class="space-y-3">
-      <a href="{% url 'upload_catch' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition">
-        <i data-feather="upload" class="w-4 h-4"></i> Upload New Catch
+      <a href="{% url 'fishportal:upload_catch' %}" class="inline-flex items-center gap-2 px-4 py-2 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition">
+        <span>📤</span> Upload New Catch
       </a>
-      <a href="{% url 'inventory' %}" class="inline-flex items-center gap-2 px-4 py-2 border border-slate-300 rounded hover:bg-slate-50">
-        <i data-feather="box" class="w-4 h-4"></i> View Inventory
+      <a href="{% url 'fishportal:inventory' %}" class="inline-flex items-center gap-2 px-4 py-2 border border-slate-300 rounded hover:bg-slate-50">
+        <span>📦</span> View Inventory
       </a>
-      <a href="{% url 'pricing_trends' %}" class="inline-flex items-center gap-2 px-4 py-2 border border-slate-300 rounded hover:bg-slate-50">
-        <i data-feather="trending-up" class="w-4 h-4"></i> Check Prices
+      <a href="{% url 'fishportal:pricing_trends' %}" class="inline-flex items-center gap-2 px-4 py-2 border border-slate-300 rounded hover:bg-slate-50">
+        <span>📈</span> Check Prices
       </a>
     </div>
   </div>
 </div>
-
-<script>
-  feather.replace()
-</script>
-
 {% endblock %}

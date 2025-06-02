@@ -1,0 +1,80 @@
+{% extends "fishportal/base.html" %}
+{% block content %}
+
+<div class="mb-8">
+  <h1 class="text-3xl font-bold text-slate-800">Pricing Trends</h1>
+  <p class="text-slate-500 mt-1">Market prices and historical data</p>
+</div>
+
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+  <!-- Price Chart -->
+  <div class="bg-white border border-slate-200 rounded-lg shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-slate-800 mb-4">Price History</h2>
+    <div class="h-80 bg-slate-50 rounded flex items-center justify-center">
+      <p class="text-slate-500">Chart will be rendered here</p>
+    </div>
+  </div>
+
+  <!-- Current Market Prices -->
+  <div class="bg-white border border-slate-200 rounded-lg shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-slate-800 mb-4">Current Market Prices</h2>
+    <div class="space-y-4">
+      <div class="flex items-center justify-between p-3 bg-slate-50 rounded">
+        <span class="font-medium">Salmon</span>
+        <span class="text-green-600 font-semibold">$45/kg</span>
+      </div>
+      <div class="flex items-center justify-between p-3 bg-slate-50 rounded">
+        <span class="font-medium">Tuna</span>
+        <span class="text-green-600 font-semibold">$35/kg</span>
+      </div>
+      <div class="flex items-center justify-between p-3 bg-slate-50 rounded">
+        <span class="font-medium">Cod</span>
+        <span class="text-green-600 font-semibold">$28/kg</span>
+      </div>
+      <div class="flex items-center justify-between p-3 bg-slate-50 rounded">
+        <span class="font-medium">Halibut</span>
+        <span class="text-green-600 font-semibold">$52/kg</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Price Alerts -->
+  <div class="bg-white border border-slate-200 rounded-lg shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-slate-800 mb-4">Price Alerts</h2>
+    <form class="space-y-4">
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Fish Type</label>
+        <select class="w-full rounded-md border-slate-300">
+          <option>Salmon</option>
+          <option>Tuna</option>
+          <option>Cod</option>
+          <option>Halibut</option>
+        </select>
+      </div>
+      <div>
+        <label class="block text-sm font-medium text-slate-700 mb-1">Target Price ($/kg)</label>
+        <input type="number" class="w-full rounded-md border-slate-300">
+      </div>
+      <button type="submit" class="w-full bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition">
+        Set Alert
+      </button>
+    </form>
+  </div>
+
+  <!-- Market Insights -->
+  <div class="bg-white border border-slate-200 rounded-lg shadow-sm p-6">
+    <h2 class="text-lg font-semibold text-slate-800 mb-4">Market Insights</h2>
+    <div class="space-y-4">
+      <div class="p-3 bg-blue-50 text-blue-800 rounded">
+        <h3 class="font-medium">Seasonal Trend</h3>
+        <p class="text-sm mt-1">Salmon prices expected to rise in the next month due to seasonal demand.</p>
+      </div>
+      <div class="p-3 bg-green-50 text-green-800 rounded">
+        <h3 class="font-medium">Supply Update</h3>
+        <p class="text-sm mt-1">Tuna supply is stable with consistent pricing expected for the next quarter.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %} 

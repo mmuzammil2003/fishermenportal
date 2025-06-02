@@ -1,0 +1,51 @@
+{% extends "fishportal/base.html" %}
+{% block content %}
+
+<div class="mb-8">
+  <h1 class="text-3xl font-bold text-slate-800">Upload New Catch</h1>
+  <p class="text-slate-500 mt-1">Record your latest catch details</p>
+</div>
+
+<div class="bg-white border border-slate-200 rounded-lg shadow-sm p-6 max-w-2xl">
+  <form method="post" enctype="multipart/form-data" class="space-y-6">
+    {% csrf_token %}
+    
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Fish Type</label>
+      <select name="fish_type" class="w-full rounded-md border-slate-300">
+        <option value="salmon">Salmon</option>
+        <option value="tuna">Tuna</option>
+        <option value="cod">Cod</option>
+        <option value="other">Other</option>
+      </select>
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Weight (kg)</label>
+      <input type="number" name="weight" step="0.1" class="w-full rounded-md border-slate-300">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Catch Location</label>
+      <input type="text" name="location" class="w-full rounded-md border-slate-300">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Catch Date</label>
+      <input type="date" name="catch_date" class="w-full rounded-md border-slate-300">
+    </div>
+
+    <div>
+      <label class="block text-sm font-medium text-slate-700 mb-1">Photos</label>
+      <input type="file" name="photos" multiple class="w-full">
+    </div>
+
+    <div>
+      <button type="submit" class="w-full bg-emerald-600 text-white py-2 px-4 rounded-md hover:bg-emerald-700 transition">
+        Upload Catch
+      </button>
+    </div>
+  </form>
+</div>
+
+{% endblock %} 
