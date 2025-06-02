@@ -1,100 +1,210 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Fisher Dashboard{% endblock %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css" />
+<style>
+    .swiper {
+        width: 100%;
+        height: 300px;
+        margin-bottom: 2rem;
+    }
+    .swiper-slide {
+        background-position: center;
+        background-size: cover;
+    }
+    .gradient-overlay {
+        background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, rgba(0,0,0,0.5) 100%);
+    }
+    .swiper-pagination-bullet {
+        background: white !important;
+        opacity: 0.5;
+    }
+    .swiper-pagination-bullet-active {
+        opacity: 1;
+    }
+    /* Convert images to black and white */
+    .bg-image-bw {
+        filter: grayscale(100%);
+    }
+</style>
+{% endblock %}
+
 {% block content %}
-<div class="max-w-7xl mx-auto">
-    <h1 class="text-3xl font-bold text-gray-900 mb-8">Welcome, {{ user.username }}!</h1>
-    
-    <!-- Stats Overview -->
-    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
-        <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-700 mb-2">Total Catches</h3>
-            <p class="text-3xl font-bold text-blue-600">{{ total_catches }}</p>
+<div class="min-h-screen bg-black">
+    <!-- Hero Carousel -->
+    <div class="swiper mySwiper mb-8">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide relative">
+                <div class="absolute inset-0 bg-cover bg-center bg-image-bw" style="background-image: url('https://images.unsplash.com/photo-1510130387422-82bed34b37e9?w=900&auto=format&fit=crop&q=60&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTB8fGZpc2h8ZW58MHx8MHx8fDA%3D');"></div>
+                <div class="absolute inset-0 gradient-overlay"></div>
+                <div class="relative z-10 h-full flex items-center px-8">
+                    <div class="max-w-xl">
+                        <h1 class="text-4xl font-light text-white mb-4">Welcome to Fisher's Portal</h1>
+                        <p class="text-lg text-gray-200">Manage your catches and connect with buyers efficiently.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide relative">
+                <div class="absolute inset-0 bg-cover bg-center bg-image-bw" style="background-image: url('https://images.unsplash.com/photo-1498654200943-1088dd4438ae?ixlib=rb-1.2.1&auto=format&fit=crop&w=1350&q=80');"></div>
+                <div class="absolute inset-0 gradient-overlay"></div>
+                <div class="relative z-10 h-full flex items-center px-8">
+                    <div class="max-w-xl">
+                        <h1 class="text-4xl font-light text-white mb-4">Track Your Success</h1>
+                        <p class="text-lg text-gray-200">Monitor your sales and inventory in real-time.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide relative">
+                <div class="absolute inset-0 bg-cover bg-center bg-image-bw" style="background-image: url('https://media.istockphoto.com/id/980462170/photo/roasted-sea-food.webp?a=1&b=1&s=612x612&w=0&k=20&c=1DdnfMf97WbvH-h3l445ifbZOsU4bH-nJ2Lx5kjWvkk=');"></div>
+                <div class="absolute inset-0 gradient-overlay"></div>
+                <div class="relative z-10 h-full flex items-center px-8">
+                    <div class="max-w-xl">
+                        <h1 class="text-4xl font-light text-white mb-4">Quality Matters</h1>
+                        <p class="text-lg text-gray-200">Maintain high standards with our grading system.</p>
+                    </div>
+                </div>
+            </div>
         </div>
-        <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-700 mb-2">Active Listings</h3>
-            <p class="text-3xl font-bold text-green-600">{{ active_catches }}</p>
-        </div>
-        <div class="bg-white rounded-lg shadow p-6">
-            <h3 class="text-lg font-semibold text-gray-700 mb-2">Sold Catches</h3>
-            <p class="text-3xl font-bold text-yellow-600">{{ sold_catches }}</p>
-        </div>
+        <div class="swiper-pagination"></div>
     </div>
 
-    <!-- Quick Actions -->
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-        <a href="{% url 'fishportal:upload_catch' %}" 
-           class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow duration-200">
-            <div class="flex items-center">
-                <div class="flex-shrink-0 bg-blue-100 rounded-lg p-3">
-                    <svg class="w-6 h-6 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-12">
+        <!-- Welcome Section -->
+        <div class="flex items-center justify-between mb-8">
+            <div>
+                <h2 class="text-2xl font-light text-white">Welcome back, <span class="font-medium">{{ user.username }}</span></h2>
+                <p class="text-sm text-gray-400 mt-1">Here's what's happening with your catches today.</p>
+            </div>
+            <div class="flex space-x-4">
+                <a href="{% url 'fishportal:upload_catch' %}" 
+                   class="inline-flex items-center px-4 py-2 border border-white rounded-lg text-sm font-medium text-black bg-white hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-white transition-colors">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
                     </svg>
-                </div>
-                <div class="ml-4">
-                    <h3 class="text-lg font-semibold text-gray-900">Upload New Catch</h3>
-                    <p class="text-sm text-gray-500">Add your latest catch to the marketplace</p>
-                </div>
+                    New Catch
+                </a>
             </div>
-        </a>
-        
-        <a href="{% url 'fishportal:inventory' %}" 
-           class="bg-white rounded-lg shadow p-6 hover:shadow-lg transition-shadow duration-200">
-            <div class="flex items-center">
-                <div class="flex-shrink-0 bg-green-100 rounded-lg p-3">
-                    <svg class="w-6 h-6 text-green-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
-                    </svg>
-                </div>
-                <div class="ml-4">
-                    <h3 class="text-lg font-semibold text-gray-900">View Inventory</h3>
-                    <p class="text-sm text-gray-500">Manage your current stock</p>
-                </div>
-            </div>
-        </a>
-    </div>
-
-    <!-- Recent Catches -->
-    <div class="bg-white rounded-lg shadow overflow-hidden">
-        <div class="p-6 border-b">
-            <h2 class="text-xl font-semibold text-gray-800">Recent Catches</h2>
         </div>
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Fish Type</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Weight</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Price/kg</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Quality</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    {% for catch in recent_catches %}
-                    <tr>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ catch.fish_type }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ catch.weight }} kg</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">${{ catch.price_per_kg }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">Grade {{ catch.quality_grade }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full 
-                                {% if catch.is_sold %}bg-green-100 text-green-800{% else %}bg-yellow-100 text-yellow-800{% endif %}">
-                                {{ catch.is_sold|yesno:"Sold,Available" }}
-                            </span>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ catch.timestamp|date:"M d, Y" }}</td>
-                    </tr>
-                    {% empty %}
-                    <tr>
-                        <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">No catches found</td>
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+
+        <!-- Stats Overview -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            <div class="bg-gray-900 rounded-lg border border-gray-800 p-6 hover:shadow-lg transition-shadow duration-200">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 bg-gray-800 rounded-lg p-3">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-sm font-medium text-gray-400">Total Catches</h3>
+                        <p class="text-2xl font-semibold text-white mt-1">{{ total_catches }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-900 rounded-lg border border-gray-800 p-6 hover:shadow-lg transition-shadow duration-200">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 bg-gray-800 rounded-lg p-3">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-sm font-medium text-gray-400">Active Listings</h3>
+                        <p class="text-2xl font-semibold text-white mt-1">{{ active_catches }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-gray-900 rounded-lg border border-gray-800 p-6 hover:shadow-lg transition-shadow duration-200">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 bg-gray-800 rounded-lg p-3">
+                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+                        </svg>
+                    </div>
+                    <div class="ml-4">
+                        <h3 class="text-sm font-medium text-gray-400">Sold Catches</h3>
+                        <p class="text-2xl font-semibold text-white mt-1">{{ sold_catches }}</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Recent Catches -->
+        <div class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden">
+            <div class="p-6 border-b border-gray-800">
+                <div class="flex items-center justify-between">
+                    <h2 class="text-lg font-medium text-white">Recent Catches</h2>
+                    <a href="{% url 'fishportal:inventory' %}" class="text-sm font-medium text-gray-300 hover:text-white transition-colors">
+                        View all
+                        <span aria-hidden="true"> →</span>
+                    </a>
+                </div>
+            </div>
+            <div class="overflow-x-auto">
+                <table class="min-w-full divide-y divide-gray-800">
+                    <thead class="bg-gray-900">
+                        <tr>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Fish Type</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Weight</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Price/kg</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Quality</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Status</th>
+                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-400 uppercase tracking-wider">Date</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-800">
+                        {% for catch in recent_catches %}
+                        <tr class="hover:bg-gray-800 transition-colors">
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <div class="flex items-center">
+                                    <div class="text-sm font-medium text-white">{{ catch.fish_type }}</div>
+                                </div>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ catch.weight }} kg</td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">${{ catch.price_per_kg }}</td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-gray-800 text-gray-300">
+                                    Grade {{ catch.quality_grade }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap">
+                                <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium 
+                                    {% if catch.is_sold %}bg-gray-800 text-gray-300{% else %}bg-white text-black{% endif %}">
+                                    {{ catch.is_sold|yesno:"Sold,Available" }}
+                                </span>
+                            </td>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-400">{{ catch.timestamp|date:"M d, Y" }}</td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-400">No catches found</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
+{% endblock %}
+
+{% block extra_js %}
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+<script>
+    var swiper = new Swiper(".mySwiper", {
+        effect: "fade",
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+</script>
 {% endblock %} 

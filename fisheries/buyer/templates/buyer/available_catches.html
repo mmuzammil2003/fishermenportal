@@ -1,16 +1,25 @@
 {% extends "buyer/base.html" %}
+{% load buyer_filters %}
 
 {% block buyer_content %}
 <div class="space-y-6">
+    <!-- Page Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h2 class="text-2xl font-light text-white">Available Catches</h2>
+            <p class="text-sm text-gray-400 mt-1">Browse and purchase available fish catches</p>
+        </div>
+    </div>
+
     <!-- Filters -->
-    <div class="bg-white shadow rounded-lg">
-        <div class="px-4 py-5 sm:p-6">
-            <form method="get" class="space-y-4">
-                <div class="grid grid-cols-1 gap-4 sm:grid-cols-4">
+    <div class="bg-gray-900 rounded-lg border border-gray-800 overflow-hidden">
+        <div class="p-6">
+            <form method="get" class="space-y-6">
+                <div class="grid grid-cols-1 gap-6 sm:grid-cols-4">
                     <!-- Fish Type Filter -->
                     <div>
-                        <label for="fish_type" class="block text-sm font-medium text-gray-700">Fish Type</label>
-                        <select id="fish_type" name="fish_type" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                        <label for="fish_type" class="block text-sm font-medium text-gray-300">Fish Type</label>
+                        <select id="fish_type" name="fish_type" class="mt-2 block w-full bg-gray-800 border-gray-700 text-white rounded-lg px-3 py-2 focus:ring-white focus:border-white text-sm">
                             <option value="">All Types</option>
                             {% for type in fish_types %}
                             <option value="{{ type }}" {% if current_filters.fish_type == type %}selected{% endif %}>{{ type }}</option>
@@ -20,8 +29,8 @@
 
                     <!-- Quality Grade Filter -->
                     <div>
-                        <label for="quality_grade" class="block text-sm font-medium text-gray-700">Quality Grade</label>
-                        <select id="quality_grade" name="quality_grade" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                        <label for="quality_grade" class="block text-sm font-medium text-gray-300">Quality Grade</label>
+                        <select id="quality_grade" name="quality_grade" class="mt-2 block w-full bg-gray-800 border-gray-700 text-white rounded-lg px-3 py-2 focus:ring-white focus:border-white text-sm">
                             <option value="">All Grades</option>
                             {% for grade in quality_grades %}
                             <option value="{{ grade }}" {% if current_filters.quality_grade == grade %}selected{% endif %}>{{ grade }}</option>
@@ -31,25 +40,31 @@
 
                     <!-- Price Range -->
                     <div>
-                        <label for="min_price" class="block text-sm font-medium text-gray-700">Min Price</label>
-                        <input type="number" id="min_price" name="min_price" value="{{ current_filters.min_price }}"
-                               class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
-                               placeholder="Min Price">
+                        <label for="min_price" class="block text-sm font-medium text-gray-300">Min Price</label>
+                        <div class="mt-2 relative rounded-lg">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">Rs</span>
+                            <input type="number" id="min_price" name="min_price" value="{{ current_filters.min_price }}"
+                                   class="block w-full bg-gray-800 border-gray-700 text-white rounded-lg pl-8 pr-3 py-2 focus:ring-white focus:border-white text-sm"
+                                   placeholder="Min Price">
+                        </div>
                     </div>
 
                     <div>
-                        <label for="max_price" class="block text-sm font-medium text-gray-700">Max Price</label>
-                        <input type="number" id="max_price" name="max_price" value="{{ current_filters.max_price }}"
-                               class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md"
-                               placeholder="Max Price">
+                        <label for="max_price" class="block text-sm font-medium text-gray-300">Max Price</label>
+                        <div class="mt-2 relative rounded-lg">
+                            <span class="absolute inset-y-0 left-0 pl-3 flex items-center text-gray-400">Rs</span>
+                            <input type="number" id="max_price" name="max_price" value="{{ current_filters.max_price }}"
+                                   class="block w-full bg-gray-800 border-gray-700 text-white rounded-lg pl-8 pr-3 py-2 focus:ring-white focus:border-white text-sm"
+                                   placeholder="Max Price">
+                        </div>
                     </div>
                 </div>
 
                 <!-- Sort Options -->
                 <div class="flex justify-between items-end">
                     <div class="w-48">
-                        <label for="sort_by" class="block text-sm font-medium text-gray-700">Sort By</label>
-                        <select id="sort_by" name="sort_by" class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
+                        <label for="sort_by" class="block text-sm font-medium text-gray-300">Sort By</label>
+                        <select id="sort_by" name="sort_by" class="mt-2 block w-full bg-gray-800 border-gray-700 text-white rounded-lg px-3 py-2 focus:ring-white focus:border-white text-sm">
                             <option value="-timestamp" {% if current_filters.sort_by == '-timestamp' %}selected{% endif %}>Newest First</option>
                             <option value="timestamp" {% if current_filters.sort_by == 'timestamp' %}selected{% endif %}>Oldest First</option>
                             <option value="price_per_kg" {% if current_filters.sort_by == 'price_per_kg' %}selected{% endif %}>Price: Low to High</option>
@@ -59,13 +74,13 @@
                         </select>
                     </div>
 
-                    <div class="flex space-x-2">
-                        <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
-                            Apply Filters
-                        </button>
-                        <a href="{% url 'buyer:available_catches' %}" class="inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+                    <div class="flex space-x-3">
+                        <a href="{% url 'buyer:available_catches' %}" class="px-4 py-2 border border-gray-700 rounded-lg text-sm font-medium text-gray-300 hover:border-gray-600 hover:text-white transition-colors">
                             Clear Filters
                         </a>
+                        <button type="submit" class="px-4 py-2 bg-white text-black rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                            Apply Filters
+                        </button>
                     </div>
                 </div>
             </form>
@@ -75,74 +90,95 @@
     <!-- Catches Grid -->
     <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {% for catch in catches %}
-        <div class="bg-white overflow-hidden shadow rounded-lg">
+        <div class="bg-gray-900 overflow-hidden rounded-lg border border-gray-800 group hover:border-gray-700 transition-colors">
             {% if catch.photo %}
-            <img src="{{ catch.photo.url }}" alt="{{ catch.fish_type }}" class="w-full h-48 object-cover">
+            <div class="relative h-48 overflow-hidden">
+                <img src="{{ catch.photo.url }}" alt="{{ catch.fish_type }}" class="w-full h-48 object-cover filter grayscale group-hover:grayscale-0 transition-all duration-300">
+                <div class="absolute inset-0 bg-black bg-opacity-40 group-hover:bg-opacity-30 transition-opacity"></div>
+            </div>
             {% else %}
-            <div class="w-full h-48 bg-gray-200 flex items-center justify-center">
-                <svg class="h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div class="w-full h-48 bg-gray-800 flex items-center justify-center">
+                <svg class="h-12 w-12 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/>
                 </svg>
             </div>
             {% endif %}
 
-            <div class="px-4 py-5 sm:p-6">
-                <h3 class="text-lg font-medium text-gray-900">{{ catch.fish_type }}</h3>
-                <div class="mt-2 max-w-xl text-sm text-gray-500">
-                    <p>Quality: {{ catch.quality_grade }}</p>
-                    <p>Weight: {{ catch.weight }} kg</p>
-                    <p>Price: ${{ catch.price_per_kg }}/kg</p>
-                    <p>Total Value: ${{ catch.weight|multiply:catch.price_per_kg }}</p>
-                    <p>Location: {{ catch.location }}</p>
-                    <p>Caught by: {{ catch.fisher.username }}</p>
+            <div class="p-6">
+                <h3 class="text-lg font-medium text-white">{{ catch.fish_type }}</h3>
+                <div class="mt-4 space-y-2 text-sm text-gray-400">
+                    <div class="flex justify-between">
+                        <span>Quality</span>
+                        <span class="text-white">{{ catch.quality_grade }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Weight</span>
+                        <span class="text-white">{{ catch.weight }} kg</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Price per kg</span>
+                        <span class="text-white">Rs {{ catch.price_per_kg }}</span>
+                    </div>
+                    <div class="flex justify-between font-medium">
+                        <span>Total Value</span>
+                        <span class="text-white">Rs {{ catch.weight|multiply:catch.price_per_kg }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Location</span>
+                        <span class="text-white">{{ catch.location }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Fisher</span>
+                        <span class="text-white">{{ catch.fisher.username }}</span>
+                    </div>
                 </div>
 
-                <div class="mt-4">
+                <div class="mt-6">
                     <button type="button" onclick="openOrderModal('{{ catch.id }}', '{{ catch.fish_type }}', {{ catch.weight }}, {{ catch.price_per_kg }})"
-                            class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700">
+                            class="w-full px-4 py-2 bg-white text-black rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
                         Place Order
                     </button>
                 </div>
             </div>
         </div>
         {% empty %}
-        <div class="col-span-full text-center py-12 bg-white rounded-lg shadow">
-            <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div class="col-span-full text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
+            <svg class="mx-auto h-12 w-12 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
             </svg>
-            <h3 class="mt-2 text-sm font-medium text-gray-900">No catches available</h3>
-            <p class="mt-1 text-sm text-gray-500">Try adjusting your filters or check back later.</p>
+            <h3 class="mt-2 text-sm font-medium text-white">No catches available</h3>
+            <p class="mt-1 text-sm text-gray-400">Try adjusting your filters or check back later.</p>
         </div>
         {% endfor %}
     </div>
 
     <!-- Pagination -->
     {% if catches.has_other_pages %}
-    <div class="bg-white px-4 py-3 flex items-center justify-between border-t border-gray-200 sm:px-6 rounded-lg shadow">
+    <div class="bg-gray-900 px-4 py-3 flex items-center justify-between border border-gray-800 rounded-lg">
         <div class="flex-1 flex justify-between sm:hidden">
             {% if catches.has_previous %}
-            <a href="?page={{ catches.previous_page_number }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            <a href="?page={{ catches.previous_page_number }}" class="px-4 py-2 border border-gray-700 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:border-gray-600 transition-colors">
                 Previous
             </a>
             {% endif %}
             {% if catches.has_next %}
-            <a href="?page={{ catches.next_page_number }}" class="ml-3 relative inline-flex items-center px-4 py-2 border border-gray-300 text-sm font-medium rounded-md text-gray-700 bg-white hover:bg-gray-50">
+            <a href="?page={{ catches.next_page_number }}" class="px-4 py-2 border border-gray-700 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:border-gray-600 transition-colors">
                 Next
             </a>
             {% endif %}
         </div>
         <div class="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
             <div>
-                <p class="text-sm text-gray-700">
-                    Showing <span class="font-medium">{{ catches.start_index }}</span> to
-                    <span class="font-medium">{{ catches.end_index }}</span> of
-                    <span class="font-medium">{{ catches.paginator.count }}</span> results
+                <p class="text-sm text-gray-300">
+                    Showing <span class="font-medium text-white">{{ catches.start_index }}</span> to
+                    <span class="font-medium text-white">{{ catches.end_index }}</span> of
+                    <span class="font-medium text-white">{{ catches.paginator.count }}</span> results
                 </p>
             </div>
             <div>
-                <nav class="relative z-0 inline-flex rounded-md shadow-sm -space-x-px">
+                <nav class="relative z-0 inline-flex space-x-2">
                     {% if catches.has_previous %}
-                    <a href="?page={{ catches.previous_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-l-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    <a href="?page={{ catches.previous_page_number }}" class="px-3 py-2 border border-gray-700 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:border-gray-600 transition-colors">
                         <span class="sr-only">Previous</span>
                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M12.707 5.293a1 1 0 010 1.414L9.414 10l3.293 3.293a1 1 0 01-1.414 1.414l-4-4a1 1 0 010-1.414l4-4a1 1 0 011.414 0z" clip-rule="evenodd" />
@@ -151,13 +187,13 @@
                     {% endif %}
 
                     {% for i in catches.paginator.page_range %}
-                    <a href="?page={{ i }}" class="relative inline-flex items-center px-4 py-2 border border-gray-300 bg-white text-sm font-medium {% if catches.number == i %}text-blue-600 bg-blue-50{% else %}text-gray-700 hover:bg-gray-50{% endif %}">
+                    <a href="?page={{ i }}" class="px-3 py-2 border {% if catches.number == i %}bg-white text-black{% else %}border-gray-700 text-gray-300 hover:text-white hover:border-gray-600{% endif %} rounded-lg text-sm font-medium transition-colors">
                         {{ i }}
                     </a>
                     {% endfor %}
 
                     {% if catches.has_next %}
-                    <a href="?page={{ catches.next_page_number }}" class="relative inline-flex items-center px-2 py-2 rounded-r-md border border-gray-300 bg-white text-sm font-medium text-gray-500 hover:bg-gray-50">
+                    <a href="?page={{ catches.next_page_number }}" class="px-3 py-2 border border-gray-700 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:border-gray-600 transition-colors">
                         <span class="sr-only">Next</span>
                         <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20" fill="currentColor">
                             <path fill-rule="evenodd" d="M7.293 14.707a1 1 0 010-1.414L10.586 10 7.293 6.707a1 1 0 011.414-1.414l4 4a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0z" clip-rule="evenodd" />
@@ -174,40 +210,42 @@
 <!-- Order Modal -->
 <div id="orderModal" class="hidden fixed z-10 inset-0 overflow-y-auto" aria-labelledby="modal-title" role="dialog" aria-modal="true">
     <div class="flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0">
-        <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
+        <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity" aria-hidden="true"></div>
         <span class="hidden sm:inline-block sm:align-middle sm:h-screen" aria-hidden="true">&#8203;</span>
-        <div class="inline-block align-bottom bg-white rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full">
+        <div class="inline-block align-bottom bg-gray-900 rounded-lg text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full border border-gray-800">
             <form id="orderForm" method="post" action="">
                 {% csrf_token %}
-                <div class="bg-white px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
+                <div class="px-4 pt-5 pb-4 sm:p-6 sm:pb-4">
                     <div class="sm:flex sm:items-start">
                         <div class="mt-3 text-center sm:mt-0 sm:text-left w-full">
-                            <h3 class="text-lg leading-6 font-medium text-gray-900" id="modal-title">
+                            <h3 class="text-lg leading-6 font-medium text-white" id="modal-title">
                                 Place Order
                             </h3>
-                            <div class="mt-4 space-y-4">
+                            <div class="mt-6 space-y-4">
                                 <div>
-                                    <label for="quantity" class="block text-sm font-medium text-gray-700">
+                                    <label for="quantity" class="block text-sm font-medium text-gray-300">
                                         Quantity (kg)
                                     </label>
-                                    <input type="number" name="quantity" id="quantity" step="0.1" min="0.1"
-                                           class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm"
-                                           required>
-                                    <p class="mt-1 text-sm text-gray-500">Available: <span id="availableWeight"></span> kg</p>
+                                    <div class="mt-2 relative rounded-lg">
+                                        <input type="number" name="quantity" id="quantity" step="0.1" min="0.1"
+                                               class="block w-full bg-gray-800 border-gray-700 text-white rounded-lg px-3 py-2 focus:ring-white focus:border-white text-sm"
+                                               required>
+                                    </div>
+                                    <p class="mt-2 text-sm text-gray-400">Available: <span id="availableWeight" class="text-white"></span> kg</p>
                                 </div>
-                                <div>
-                                    <p class="text-sm text-gray-500">Price per kg: $<span id="pricePerKg"></span></p>
-                                    <p class="text-sm font-medium text-gray-900">Total Price: $<span id="totalPrice">0.00</span></p>
+                                <div class="space-y-1">
+                                    <p class="text-sm text-gray-400">Price per kg: <span class="text-white">Rs <span id="pricePerKg"></span></span></p>
+                                    <p class="text-sm font-medium text-gray-300">Total Price: <span class="text-white">Rs <span id="totalPrice">0.00</span></span></p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
-                    <button type="submit" class="w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-blue-600 text-base font-medium text-white hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:ml-3 sm:w-auto sm:text-sm">
+                <div class="bg-gray-800 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                    <button type="submit" class="w-full sm:w-auto sm:ml-3 px-4 py-2 bg-white text-black rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
                         Confirm Order
                     </button>
-                    <button type="button" onclick="closeOrderModal()" class="mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 sm:mt-0 sm:ml-3 sm:w-auto sm:text-sm">
+                    <button type="button" onclick="closeOrderModal()" class="mt-3 sm:mt-0 w-full sm:w-auto px-4 py-2 border border-gray-700 rounded-lg text-sm font-medium text-gray-300 hover:text-white hover:border-gray-600 transition-colors">
                         Cancel
                     </button>
                 </div>
