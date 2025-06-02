@@ -17,11 +17,15 @@
             background: rgba(255, 255, 255, 0.95);
             backdrop-filter: blur(10px);
         }
+        /* Add padding to body to account for fixed navbar */
+        body {
+            padding-top: 4rem;
+        }
     </style>
 </head>
 <body class="bg-slate-50 min-h-screen">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm">
+    <!-- Fixed Navigation -->
+    <nav class="bg-white shadow-sm fixed top-0 left-0 right-0 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
                 <div class="flex">
@@ -32,14 +36,8 @@
                         <a href="{% url 'fishportal:home' %}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Dashboard
                         </a>
-                        <a href="{% url 'fishportal:inventory' %}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            Inventory
-                        </a>
                         <a href="{% url 'fishportal:upload_catch' %}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
                             Upload Catch
-                        </a>
-                        <a href="{% url 'fishportal:pricing_trends' %}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            Pricing Trends
                         </a>
                     </div>
                 </div>

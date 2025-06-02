@@ -1,0 +1,100 @@
+/* ===== Base Glass Styling ===== */
+.bg-white\/80 {
+    background-color: rgba(255, 255, 255, 0.8);
+  }
+  .backdrop-blur-xl {
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+  }
+  
+  /* ===== Form Card Glow & Animation ===== */
+  form {
+    animation: fade-slide-up 0.6s ease-in-out both;
+  }
+  @keyframes fade-slide-up {
+    0% {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* ===== Header Gradient Text ===== */
+  h2.text-3xl {
+    background: linear-gradient(to right, #1e293b, #475569);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+  
+  /* ===== Live Market Pulse ===== */
+  .animate-pulse {
+    animation: pulse-dot 2s infinite;
+  }
+  @keyframes pulse-dot {
+    0%, 100% {
+      opacity: 0.4;
+      transform: scale(0.9);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.1);
+    }
+  }
+  
+  /* ===== Upload Box Hover Effect ===== */
+  label[for="photo"] div {
+    transition: all 0.3s ease;
+  }
+  label[for="photo"] div:hover {
+    border-color: #3b82f6;
+    background: linear-gradient(to bottom right, #e0f2fe, #f0f9ff);
+  }
+  
+  /* ===== Inputs & Selects Aesthetic ===== */
+  input, select, textarea {
+    font-size: 1rem;
+    border: 1px solid #e2e8f0;
+    padding: 0.75rem 1rem;
+    background-color: rgba(255, 255, 255, 0.5);
+    border-radius: 0.75rem;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+  }
+  input:focus, select:focus, textarea:focus {
+    border-color: #3b82f6;
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.2);
+  }
+  
+  /* ===== Gradient Primary Button ===== */
+  button[type="submit"] {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    font-weight: 600;
+    transition: all 0.3s ease;
+  }
+  button[type="submit"]:hover {
+    transform: scale(1.02);
+    box-shadow: 0 10px 20px rgba(59, 130, 246, 0.2);
+  }
+  
+  /* ===== Secondary Button ===== */
+  button[type="reset"] {
+    background-color: rgba(255, 255, 255, 0.3);
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  button[type="reset"]:hover {
+    background-color: rgba(226, 232, 240, 0.5);
+    transform: scale(1.01);
+  }
+  
+  /* ===== Feather Icon Smoothing ===== */
+  i[data-feather] {
+    stroke-width: 2.5;
+    stroke: #475569;
+  }
+  

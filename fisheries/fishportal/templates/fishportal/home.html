@@ -1,6 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
 
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'fishportal/css/home.css' %}">
+{% endblock %}
+
 {% block content %}
 <div class="mb-8">
   <h1 class="text-3xl font-bold text-slate-800">Fisherman Dashboard</h1>

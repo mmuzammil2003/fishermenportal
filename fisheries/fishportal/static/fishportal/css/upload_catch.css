@@ -1,0 +1,495 @@
+/* Modern Fish Catch Upload Form Styles */
+
+/* Page Container */
+.upload-container {
+    background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+    min-height: 100vh;
+    padding: 2rem 1rem;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .upload-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: 
+      radial-gradient(circle at 20% 80%, rgba(255, 255, 255, 0.1) 0%, transparent 70%),
+      radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  
+  /* Header Section */
+  .upload-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    position: relative;
+    z-index: 1;
+  }
+  
+  .upload-header h1 {
+    color: white;
+    font-size: 3rem;
+    font-weight: 800;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    background: linear-gradient(45deg, #ffffff, #e0f2fe);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+  
+  .upload-header p {
+    color: rgba(255, 255, 255, 0.9);
+    font-size: 1.2rem;
+    font-weight: 300;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Form Container */
+  .form-container {
+    max-width: 600px;
+    margin: 0 auto;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(20px);
+    border-radius: 24px;
+    padding: 3rem;
+    box-shadow: 
+      0 25px 50px rgba(0, 0, 0, 0.15),
+      0 0 0 1px rgba(255, 255, 255, 0.2);
+    position: relative;
+    z-index: 1;
+    border: 1px solid rgba(255, 255, 255, 0.3);
+  }
+  
+  .form-container::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.8), transparent);
+  }
+  
+  /* Form Groups */
+  .form-group {
+    margin-bottom: 2rem;
+    position: relative;
+  }
+  
+  .form-group:last-child {
+    margin-bottom: 0;
+  }
+  
+  /* Labels */
+  .form-label {
+    display: block;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #334155;
+    margin-bottom: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    position: relative;
+  }
+  
+  .form-label::after {
+    content: '';
+    position: absolute;
+    bottom: -4px;
+    left: 0;
+    width: 30px;
+    height: 2px;
+    background: linear-gradient(90deg, #0ea5e9, #06b6d4);
+    border-radius: 1px;
+  }
+  
+  /* Input Styles */
+  .form-input,
+  .form-select,
+  .form-file {
+    width: 100%;
+    padding: 1rem 1.25rem;
+    border: 2px solid rgba(148, 163, 184, 0.2);
+    border-radius: 16px;
+    font-size: 1rem;
+    background: rgba(255, 255, 255, 0.8);
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    outline: none;
+    position: relative;
+  }
+  
+  .form-input:focus,
+  .form-select:focus {
+    border-color: #0ea5e9;
+    background: white;
+    box-shadow: 
+      0 0 0 4px rgba(14, 165, 233, 0.1),
+      0 8px 25px rgba(14, 165, 233, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .form-input:hover,
+  .form-select:hover {
+    border-color: rgba(14, 165, 233, 0.4);
+    background: rgba(255, 255, 255, 0.9);
+  }
+  
+  /* Select Dropdown */
+  .form-select {
+    cursor: pointer;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 20 20'%3e%3cpath stroke='%236b7280' stroke-linecap='round' stroke-linejoin='round' stroke-width='1.5' d='m6 8 4 4 4-4'/%3e%3c/svg%3e");
+    background-position: right 1rem center;
+    background-repeat: no-repeat;
+    background-size: 1.5em 1.5em;
+    padding-right: 3rem;
+  }
+  
+  /* File Input */
+  .form-file {
+    padding: 1.5rem;
+    border: 2px dashed rgba(148, 163, 184, 0.4);
+    background: rgba(248, 250, 252, 0.5);
+    text-align: center;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .form-file:hover {
+    border-color: #0ea5e9;
+    background: rgba(14, 165, 233, 0.05);
+  }
+  
+  .form-file::before {
+    content: '📸';
+    font-size: 2rem;
+    display: block;
+    margin-bottom: 0.5rem;
+  }
+  
+  .form-file::after {
+    content: 'Click to upload photos or drag and drop';
+    display: block;
+    color: #64748b;
+    font-size: 0.875rem;
+    font-weight: 500;
+  }
+  
+  /* Submit Button */
+  .submit-button {
+    width: 100%;
+    padding: 1.25rem 2rem;
+    background: linear-gradient(135deg, #0ea5e9 0%, #06b6d4 100%);
+    color: white;
+    border: none;
+    border-radius: 16px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+    box-shadow: 0 8px 25px rgba(14, 165, 233, 0.3);
+  }
+  
+  .submit-button::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+    transition: left 0.6s;
+  }
+  
+  .submit-button:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 15px 35px rgba(14, 165, 233, 0.4);
+    background: linear-gradient(135deg, #0284c7 0%, #0891b2 100%);
+  }
+  
+  .submit-button:hover::before {
+    left: 100%;
+  }
+  
+  .submit-button:active {
+    transform: translateY(-1px);
+  }
+  
+  /* Floating Animation */
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  .form-container {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  /* Responsive Design */
+  @media (max-width: 768px) {
+    .upload-container {
+      padding: 1rem;
+    }
+    
+    .upload-header h1 {
+      font-size: 2.5rem;
+    }
+    
+    .form-container {
+      padding: 2rem 1.5rem;
+      border-radius: 20px;
+    }
+    
+    .form-input,
+    .form-select {
+      padding: 0.875rem 1rem;
+    }
+  }
+  
+  /* Input Placeholder Styles */
+  .form-input::placeholder {
+    color: #94a3b8;
+    font-style: italic;
+  }
+  
+  /* Success State (for form validation) */
+  .form-input.success {
+    border-color: #10b981;
+    background: rgba(16, 185, 129, 0.05);
+  }
+  
+  .form-input.success:focus {
+    border-color: #10b981;
+    box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
+  }
+  
+  /* Error State (for form validation) */
+  .form-input.error {
+    border-color: #ef4444;
+    background: rgba(239, 68, 68, 0.05);
+  }
+  
+  .form-input.error:focus {
+    border-color: #ef4444;
+    box-shadow: 0 0 0 4px rgba(239, 68, 68, 0.1);
+  }
+  
+  /* Loading State for Submit Button */
+  .submit-button.loading {
+    pointer-events: none;
+    opacity: 0.8;
+  }
+  
+  .submit-button.loading::after {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 50%;
+    left: 50%;
+    margin-left: -10px;
+    margin-top: -10px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-top-color: white;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+  }
+  
+  @keyframes spin {
+    to { transform: rotate(360deg); }
+  }
+
+/* Custom styles for the upload catch form */
+
+/* Form container animations */
+.bg-white {
+    transition: transform 0.3s ease-in-out;
+}
+
+.bg-white:hover {
+    transform: translateY(-2px);
+}
+
+/* Input and select field styling */
+input[type="text"],
+input[type="number"],
+select {
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+input[type="text"]:hover,
+input[type="number"]:hover,
+select:hover {
+    border-color: #93c5fd;
+}
+
+/* Custom file upload area styling */
+.border-dashed {
+    transition: all 0.3s ease;
+    background: linear-gradient(to bottom right, #ffffff, #f8fafc);
+}
+
+.border-dashed:hover {
+    background: linear-gradient(to bottom right, #f8fafc, #f0f9ff);
+    border-color: #60a5fa;
+}
+
+/* Drag and drop states */
+.border-dashed.drag-over {
+    background: #f0f9ff;
+    border-color: #3b82f6;
+    transform: scale(1.02);
+}
+
+/* Submit button animation */
+button[type="submit"] {
+    transition: all 0.3s ease;
+}
+
+button[type="submit"]:hover {
+    transform: translateY(-1px);
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+button[type="submit"]:active {
+    transform: translateY(0);
+}
+
+/* Form field focus effects */
+input:focus,
+select:focus {
+    box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.1);
+}
+
+/* Label animations */
+label {
+    transition: color 0.2s ease;
+}
+
+div:focus-within > label {
+    color: #2563eb;
+}
+
+/* Error state styling */
+.error input,
+.error select {
+    border-color: #ef4444;
+    background-color: #fef2f2;
+}
+
+.error label {
+    color: #dc2626;
+}
+
+/* Success state styling */
+.success input,
+.success select {
+    border-color: #10b981;
+    background-color: #f0fdf4;
+}
+
+/* Add some depth to the form container */
+.max-w-2xl {
+    box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+/* Custom scrollbar for select dropdowns */
+select {
+    scrollbar-width: thin;
+    scrollbar-color: #93c5fd transparent;
+}
+
+select::-webkit-scrollbar {
+    width: 6px;
+}
+
+select::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+select::-webkit-scrollbar-thumb {
+    background-color: #93c5fd;
+    border-radius: 3px;
+}
+
+/* Add a subtle pattern to the page background */
+body {
+    background-image: linear-gradient(to right, rgba(99, 179, 237, 0.05) 1px, transparent 1px),
+                      linear-gradient(to bottom, rgba(99, 179, 237, 0.05) 1px, transparent 1px);
+    background-size: 20px 20px;
+}
+
+/* Add some animation to the form title */
+.text-3xl {
+    background: linear-gradient(120deg, #3b82f6 0%, #2563eb 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    color: transparent;
+}
+
+/* Style placeholder text */
+::placeholder {
+    color: #94a3b8;
+    opacity: 0.7;
+}
+
+/* Add a subtle transition to form fields when they become disabled */
+input:disabled,
+select:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transition: opacity 0.3s ease;
+}
+
+/* Add loading state styling */
+.loading {
+    position: relative;
+    pointer-events: none;
+}
+
+.loading::after {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 1.5em;
+    height: 1.5em;
+    border: 2px solid #e2e8f0;
+    border-top-color: #3b82f6;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+/* Add custom styling for validation messages */
+.validation-message {
+    font-size: 0.875rem;
+    margin-top: 0.25rem;
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.validation-message.error {
+    color: #dc2626;
+}
+
+.validation-message.success {
+    color: #10b981;
+}

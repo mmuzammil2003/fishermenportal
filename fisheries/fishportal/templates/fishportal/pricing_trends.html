@@ -1,5 +1,12 @@
 {% extends "fishportal/base.html" %}
+{% load static %}
+
 {% block content %}
+
+{% block extra_css %}
+<link rel="stylesheet" href="{% static 'fishportal/css/pricing_trends.css' %}">
+{% endblock %}
+
 
 <div class="mb-8">
   <h1 class="text-3xl font-bold text-slate-800">Pricing Trends</h1>
