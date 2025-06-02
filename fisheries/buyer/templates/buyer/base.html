@@ -2,67 +2,56 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <title>FishChain | Dashboard</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Buyer Portal</title>
-    
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
-    
-    <!-- Custom CSS -->
-    {% block extra_css %}{% endblock %}
-    
-    <style>
-        /* Add any global styles here */
-        .bg-glass {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-        }
-    </style>
+    <script src="https://unpkg.com/feather-icons"></script>
 </head>
-<body class="bg-slate-50 min-h-screen">
-    <!-- Navigation -->
-    <nav class="bg-white shadow-sm">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <div class="flex-shrink-0 flex items-center">
-                        <span class="text-2xl font-bold text-purple-600">🛒 BuyerPortal</span>
-                    </div>
-                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
-                        <a href="{% url 'buyer:dashboard' %}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
-                            Dashboard
-                        </a>
-                        <!-- Add more navigation items here -->
-                    </div>
+<body class="bg-gray-50 text-gray-800">
+    <div class="flex min-h-screen">
+        <!-- Sidebar -->
+        <aside class="w-64 bg-white border-r p-4 hidden md:block">
+            <div class="flex items-center space-x-3 mb-6">
+                <div class="bg-gradient-to-br from-blue-500 to-teal-600 p-2 rounded-lg">
+                    <i data-feather="fish" class="text-white"></i>
                 </div>
-                <!-- User Menu -->
-                <div class="flex items-center">
-                    <div class="flex items-center space-x-4">
-                        <span class="text-gray-700">{{ user.username }} (Buyer)</span>
-                        <form method="post" action="{% url 'logout' %}" class="inline">
-                            {% csrf_token %}
-                            <button type="submit" class="inline-flex items-center px-4 py-2 border border-transparent text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500">
-                                Logout
-                            </button>
-                        </form>
-                    </div>
+                <div>
+                    <h1 class="text-xl font-bold text-slate-900">FishChain</h1>
+                    <p class="text-sm text-gray-500">Supply Platform</p>
                 </div>
             </div>
-        </div>
-    </nav>
 
-    <!-- Main Content -->
-    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        {% block content %}{% endblock %}
-    </main>
+            <div class="mb-6">
+                <label class="block text-gray-600 font-semibold mb-1">Role: Fisherman</label>
+                <select class="w-full border rounded-lg px-3 py-2 text-sm">
+                    <option selected>Fisherman</option>
+                    <option>Buyer</option>
+                    <option>Admin</option>
+                </select>
+            </div>
 
-    <!-- Footer -->
-    <footer class="bg-white border-t mt-auto">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-gray-500 text-sm">
-                © 2024 BuyerPortal. All rights reserved.
-            </p>
-        </div>
-    </footer>
+            <nav>
+                <p class="text-gray-500 font-medium text-sm mb-2">Navigation</p>
+                <ul class="space-y-2">
+                    <li><a href="#" class="flex items-center space-x-2 text-blue-700 bg-blue-50 px-3 py-2 rounded-lg border border-blue-200"><i data-feather="bar-chart-2"></i><span>Dashboard</span></a></li>
+                    <li><a href="#" class="flex items-center space-x-2 text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-lg"><i data-feather="upload"></i><span>Upload Catch</span></a></li>
+                    <li><a href="#" class="flex items-center space-x-2 text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-lg"><i data-feather="package"></i><span>My Inventory</span></a></li>
+                    <li><a href="#" class="flex items-center space-x-2 text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-lg"><i data-feather="trending-up"></i><span>Pricing Trends</span></a></li>
+                    <li><a href="#" class="flex items-center space-x-2 text-gray-600 hover:bg-gray-100 px-3 py-2 rounded-lg"><i data-feather="star"></i><span>Ratings</span></a></li>
+                </ul>
+            </nav>
+        </aside>
+
+        <!-- Main content -->
+        <main class="flex-1 p-6">
+            {% block content %}
+            <!-- Page-specific content will go here -->
+            {% endblock %}
+        </main>
+    </div>
+
+    <script>
+        feather.replace();
+    </script>
 </body>
-</html> 
+</html>

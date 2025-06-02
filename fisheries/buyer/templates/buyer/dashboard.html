@@ -2,87 +2,124 @@
 {% load static %}
 
 {% block content %}
-<div class="mb-8">
-    <h1 class="text-3xl font-bold text-slate-800">Buyer Dashboard</h1>
-    <p class="text-slate-500 mt-1">Welcome back! Here's your marketplace overview</p>
+<div class="space-y-6">
+  <!-- Welcome Text -->
+  <div>
+    <h2 class="text-2xl font-bold text-slate-900 mb-2">
+      Welcome back, {{ current_role|title }}!
+    </h2>
+    <p class="text-slate-600">
+      {% if current_role == "fisherman" %}
+        Here's your fishing business overview
+      {% else %}
+        Here's your marketplace activity
+      {% endif %}
+    </p>
+  </div>
+
+  <!-- Stats Cards -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+    {% if current_role == "fisherman" %}
+      {% with stats=[
+        {"title": "Total Catches", "value": "24", "icon": "🐟", "color": "blue"},
+        {"title": "Revenue This Month", "value": "$1,240", "icon": "💵", "color": "green"},
+        {"title": "Average Rating", "value": "4.8", "icon": "⭐", "color": "yellow"},
+        {"title": "Active Listings", "value": "8", "icon": "📦", "color": "purple"}
+      ] %}
+    {% else %}
+      {% with stats=[
+        {"title": "Orders This Month", "value": "12", "icon": "🛒", "color": "blue"},
+        {"title": "Total Spent", "value": "$890", "icon": "💵", "color": "green"},
+        {"title": "Favorite Suppliers", "value": "5", "icon": "👥", "color": "purple"},
+        {"title": "Saved Searches", "value": "3", "icon": "🔍", "color": "orange"}
+      ] %}
+    {% endif %}
+
+    {% for stat in stats %}
+    <div class="bg-white border border-slate-200 rounded-lg p-6 shadow-sm">
+      <div class="flex items-center justify-between">
+        <div>
+          <p class="text-sm text-slate-600 mb-1">{{ stat.title }}</p>
+          <p class="text-2xl font-bold text-slate-900">{{ stat.value }}</p>
+        </div>
+        <div class="p-3 rounded-lg bg-{{ stat.color }}-100 text-{{ stat.color }}-600 text-2xl">
+          {{ stat.icon }}
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+    {% endwith %}
+  </div>
+
+  <!-- Cards: Recent Activity and Quick Actions -->
+  <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+    <!-- Recent Activity -->
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm">
+      <div class="bg-slate-50 border-b border-slate-200 p-4">
+        <h3 class="text-lg font-semibold text-slate-900">Recent Activity</h3>
+      </div>
+      <div class="p-6 space-y-4">
+        {% for i in "123" %}
+        <div class="flex items-center gap-3 p-3 bg-slate-50 rounded-lg">
+          <div class="h-2 w-2 bg-blue-500 rounded-full"></div>
+          <div class="flex-1">
+            <p class="text-sm font-medium text-slate-900">
+              {% if current_role == "fisherman" %}
+                New order for Atlantic Salmon
+              {% else %}
+                Order delivered from Captain John
+              {% endif %}
+            </p>
+            <p class="text-xs text-slate-500">{{ forloop.counter }} hours ago</p>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+
+    <!-- Quick Actions -->
+    <div class="bg-white border border-slate-200 rounded-lg shadow-sm">
+      <div class="bg-slate-50 border-b border-slate-200 p-4">
+        <h3 class="text-lg font-semibold text-slate-900">Quick Actions</h3>
+      </div>
+      <div class="p-6 grid grid-cols-2 gap-3 text-center">
+        {% if current_role == "fisherman" %}
+          <button class="border rounded-lg h-20 flex flex-col justify-center items-center gap-2 text-slate-700 hover:bg-slate-50">
+            ⬆️
+            <span class="text-xs">Upload Catch</span>
+          </button>
+          <button class="border rounded-lg h-20 flex flex-col justify-center items-center gap-2 text-slate-700 hover:bg-slate-50">
+            📦
+            <span class="text-xs">View Inventory</span>
+          </button>
+          <button class="border rounded-lg h-20 flex flex-col justify-center items-center gap-2 text-slate-700 hover:bg-slate-50">
+            📈
+            <span class="text-xs">Price Trends</span>
+          </button>
+          <button class="border rounded-lg h-20 flex flex-col justify-center items-center gap-2 text-slate-700 hover:bg-slate-50">
+            ⭐
+            <span class="text-xs">My Ratings</span>
+          </button>
+        {% else %}
+          <button class="border rounded-lg h-20 flex flex-col justify-center items-center gap-2 text-slate-700 hover:bg-slate-50">
+            🛒
+            <span class="text-xs">Browse Fish</span>
+          </button>
+          <button class="border rounded-lg h-20 flex flex-col justify-center items-center gap-2 text-slate-700 hover:bg-slate-50">
+            📦
+            <span class="text-xs">My Orders</span>
+          </button>
+          <button class="border rounded-lg h-20 flex flex-col justify-center items-center gap-2 text-slate-700 hover:bg-slate-50">
+            📈
+            <span class="text-xs">Price Trends</span>
+          </button>
+          <button class="border rounded-lg h-20 flex flex-col justify-center items-center gap-2 text-slate-700 hover:bg-slate-50">
+            💬
+            <span class="text-xs">Messages</span>
+          </button>
+        {% endif %}
+      </div>
+    </div>
+  </div>
 </div>
-
-<!-- Summary Cards -->
-<div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6 mb-8">
-    <!-- Total Orders -->
-    <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm flex items-center justify-between">
-        <div>
-            <p class="text-slate-500 text-sm">Total Orders</p>
-            <h2 class="text-2xl font-bold text-slate-800">24</h2>
-        </div>
-        <span class="text-2xl">📦</span>
-    </div>
-
-    <!-- Spent -->
-    <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm flex items-center justify-between">
-        <div>
-            <p class="text-slate-500 text-sm">Total Spent</p>
-            <h2 class="text-2xl font-bold text-green-600">$4,320</h2>
-        </div>
-        <span class="text-2xl">💰</span>
-    </div>
-
-    <!-- Active Bids -->
-    <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm flex items-center justify-between">
-        <div>
-            <p class="text-slate-500 text-sm">Active Bids</p>
-            <h2 class="text-2xl font-bold text-slate-800">8</h2>
-        </div>
-        <span class="text-2xl">🎯</span>
-    </div>
-
-    <!-- Rating -->
-    <div class="bg-white border border-slate-200 rounded-lg p-5 shadow-sm flex items-center justify-between">
-        <div>
-            <p class="text-slate-500 text-sm">Rating</p>
-            <h2 class="text-2xl font-bold text-yellow-500">4.9</h2>
-        </div>
-        <span class="text-2xl">⭐</span>
-    </div>
-</div>
-
-<!-- Available Catches -->
-<div class="bg-white border border-slate-200 rounded-lg shadow-sm p-6">
-    <div class="flex justify-between items-center mb-6">
-        <h2 class="text-xl font-semibold text-slate-800">Available Catches</h2>
-        <button class="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition">
-            View All
-        </button>
-    </div>
-    
-    <div class="overflow-x-auto">
-        <table class="min-w-full divide-y divide-slate-200">
-            <thead>
-                <tr>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Fisher</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Fish Type</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Weight</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Price/kg</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Location</th>
-                    <th class="px-6 py-3 text-left text-xs font-medium text-slate-500 uppercase tracking-wider">Action</th>
-                </tr>
-            </thead>
-            <tbody class="bg-white divide-y divide-slate-200">
-                <tr>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">John Doe</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">Salmon</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">25 kg</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">$45</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm text-slate-900">North Pacific</td>
-                    <td class="px-6 py-4 whitespace-nowrap text-sm">
-                        <button class="px-3 py-1 bg-emerald-600 text-white rounded hover:bg-emerald-700 transition">
-                            Place Bid
-                        </button>
-                    </td>
-                </tr>
-                <!-- Add more rows as needed -->
-            </tbody>
-        </table>
-    </div>
-</div>
-{% endblock %} 
+{% endblock %}

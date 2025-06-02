@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-{% extends 'base.html' %}
-=======
 {% extends 'fishportal/base.html' %}
->>>>>>> ac94096def63980c1b8f4b86cb0c45db20121ae0
 {% load static %}
 
 {% block extra_css %}
@@ -84,8 +80,10 @@
             <span class="text-slate-600">Freshness</span>
             <span class="font-medium">{{ item.freshness }}%</span>
           </div>
-          <div class="w-full bg-gray-200 rounded-full h-2">
-            <div class="progress-bar bg-emerald-500 h-2 transition-all duration-500" {% if item.freshness %}style="width: {{ item.freshness }}%"{% endif %}></div>
+          <div class="w-full bg-gray-200 rounded-full h-2 overflow-hidden">
+            {% with width=item.freshness|stringformat:"d" %}
+            <div class="bg-emerald-500 h-2 transition-all duration-500 w-[{{ width }}%]"></div>
+            {% endwith %}
           </div>
         </div>
         <div class="flex justify-between text-sm text-slate-600">
@@ -101,8 +99,4 @@
     {% endfor %}
   </div>
 </div>
-<<<<<<< HEAD
 {% endblock %}
-=======
-{% endblock %}
->>>>>>> ac94096def63980c1b8f4b86cb0c45db20121ae0
