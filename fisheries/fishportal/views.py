@@ -1,10 +1,11 @@
-# fishportal/views.py
+from django.shortcuts import render
 
-from django.views.generic import TemplateView
-from django.contrib.auth.mixins import LoginRequiredMixin
-
+# Create your views here.
 from django.views.generic import TemplateView
 
 class DashboardView(TemplateView):
     template_name = "fishportal/home.html"
 
+class UploadCatchView(TemplateView):
+    def get(self, request):
+        return render(request, 'fishportal/upload.html')
