@@ -1,4 +1,6 @@
 {% extends "buyer/base.html" %}
+{% load static %}
+{% load custom_filters %}
 
 {% block buyer_content %}
 <div class="space-y-6">
@@ -91,8 +93,8 @@
                 <div class="mt-2 max-w-xl text-sm text-gray-500">
                     <p>Quality: {{ catch.quality_grade }}</p>
                     <p>Weight: {{ catch.weight }} kg</p>
-                    <p>Price: ${{ catch.price_per_kg }}/kg</p>
-                    <p>Total Value: ${{ catch.weight|multiply:catch.price_per_kg }}</p>
+                    <p>Price: ${{ catch.price_per_kg|floatformat:2 }}/kg</p>
+                    <p>Total Value: ${{ catch.weight|multiply:catch.price_per_kg|floatformat:2 }}</p>
                     <p>Location: {{ catch.location }}</p>
                     <p>Caught by: {{ catch.fisher.username }}</p>
                 </div>
@@ -228,7 +230,7 @@ function openOrderModal(catchId, fishType, weight, pricePerKg) {
     modal.classList.remove('hidden');
     form.action = `/buyer/create-order/${catchId}/`;
     availableWeight.textContent = weight;
-    pricePerKgSpan.textContent = pricePerKg;
+    pricePerKgSpan.textContent = pricePerKg.toFixed(2);
     quantityInput.max = weight;
 
     quantityInput.addEventListener('input', function() {
