@@ -1,39 +1,77 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="h-full bg-black">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Fisher's Portal{% endblock %}</title>
     
-    <!-- Tailwind CSS via CDN -->
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'sans': ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    
+    <!-- Inter Font -->
+    <link rel="stylesheet" href="https://rsms.me/inter/inter.css">
     
     <!-- Custom CSS -->
+    <style>
+        @supports (font-variation-settings: normal) {
+            html { font-family: 'Inter var', sans-serif; }
+        }
+        .nav-link {
+            position: relative;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: -2px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background-color: white;
+            transition: width 0.2s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+        .nav-link.active::after {
+            width: 100%;
+        }
+    </style>
     {% block extra_css %}{% endblock %}
 </head>
-<body class="bg-gray-50">
+<body class="h-full bg-black text-white">
+    {% if not hide_nav %}
     <!-- Navigation -->
-    <nav class="bg-white shadow-sm">
+    <nav class="fixed top-0 left-0 right-0 bg-black border-b border-gray-800 z-50">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex justify-between h-16">
-                <div class="flex">
-                    <!-- Logo -->
-                    <div class="flex-shrink-0 flex items-center">
-                        <a href="{% url 'fishportal:dashboard' %}" class="text-xl font-bold text-blue-600">Fisher's Portal</a>
-                    </div>
+                <div class="flex items-center">
+                    <a href="{% url 'fishportal:dashboard' %}" class="text-xl font-light text-white hover:text-gray-200 transition-colors">Fisher's Portal</a>
                     
-                    <!-- Navigation Links -->
                     {% if user.is_authenticated %}
-                    <div class="hidden sm:ml-6 sm:flex sm:space-x-8">
+                    <div class="hidden md:flex space-x-8 ml-10">
                         {% if user.is_fisher %}
-                        <a href="{% url 'fishportal:dashboard' %}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        <a href="{% url 'fishportal:dashboard' %}" 
+                           class="nav-link text-sm text-gray-300 hover:text-white transition-colors">
                             Dashboard
                         </a>
-                        <a href="{% url 'fishportal:my_catches' %}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        <a href="{% url 'fishportal:my_catches' %}" 
+                           class="nav-link text-sm text-gray-300 hover:text-white transition-colors">
                             My Catches
                         </a>
-                        <a href="{% url 'fishportal:upload_catch' %}" class="border-transparent text-gray-500 hover:border-gray-300 hover:text-gray-700 inline-flex items-center px-1 pt-1 border-b-2 text-sm font-medium">
+                        <a href="{% url 'fishportal:upload_catch' %}" 
+                           class="nav-link text-sm text-gray-300 hover:text-white transition-colors">
                             Upload Catch
                         </a>
                         {% endif %}
@@ -42,51 +80,80 @@
                 </div>
                 
                 <!-- User Menu -->
-                <div class="flex items-center">
-                    {% if user.is_authenticated %}
-                    <div class="ml-3 relative">
-                        <div class="flex items-center space-x-4">
-                            <span class="text-gray-700">{{ user.username }}</span>
-                            <form method="post" action="{% url 'logout' %}" class="inline">
-                                {% csrf_token %}
-                                <button type="submit" class="text-gray-500 hover:text-gray-700">
-                                    Logout
-                                </button>
-                            </form>
-                        </div>
-                    </div>
-                    {% else %}
-                    <a href="{% url 'login' %}" class="text-gray-500 hover:text-gray-700">Login</a>
-                    {% endif %}
+                {% if user.is_authenticated %}
+                <div class="flex items-center space-x-6">
+                    <span class="text-sm text-gray-300">{{ user.username }}</span>
+                    <form method="post" action="{% url 'logout' %}" class="inline">
+                        {% csrf_token %}
+                        <button type="submit" 
+                                class="text-sm text-gray-300 hover:text-white transition-colors border border-gray-800 rounded-lg px-4 py-2 hover:border-gray-700">
+                            Sign out
+                        </button>
+                    </form>
                 </div>
+                {% else %}
+                <div class="flex items-center space-x-4">
+                    <a href="{% url 'login' %}" 
+                       class="text-sm text-gray-300 hover:text-white transition-colors">
+                        Sign in
+                    </a>
+                    <a href="{% url 'register' %}" 
+                       class="text-sm bg-white text-black hover:bg-gray-100 transition-colors rounded-lg px-4 py-2">
+                        Create account
+                    </a>
+                </div>
+                {% endif %}
             </div>
         </div>
     </nav>
 
+    <!-- Mobile Navigation -->
+    {% if user.is_authenticated and user.is_fisher %}
+    <div class="md:hidden fixed bottom-0 left-0 right-0 bg-black border-t border-gray-800 z-50">
+        <div class="grid grid-cols-3 h-16">
+            <a href="{% url 'fishportal:dashboard' %}" 
+               class="flex flex-col items-center justify-center text-gray-300 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"></path>
+                </svg>
+                <span class="text-xs mt-1">Dashboard</span>
+            </a>
+            <a href="{% url 'fishportal:my_catches' %}" 
+               class="flex flex-col items-center justify-center text-gray-300 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2"></path>
+                </svg>
+                <span class="text-xs mt-1">My Catches</span>
+            </a>
+            <a href="{% url 'fishportal:upload_catch' %}" 
+               class="flex flex-col items-center justify-center text-gray-300 hover:text-white transition-colors">
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"></path>
+                </svg>
+                <span class="text-xs mt-1">Upload</span>
+            </a>
+        </div>
+    </div>
+    {% endif %}
+    {% endif %}
+
     <!-- Messages -->
     {% if messages %}
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-4">
+    <div class="fixed top-4 right-4 z-50 space-y-4">
         {% for message in messages %}
-        <div class="rounded-md p-4 mb-4 {% if message.tags == 'success' %}bg-green-50 text-green-700{% elif message.tags == 'error' %}bg-red-50 text-red-700{% else %}bg-blue-50 text-blue-700{% endif %}">
-            {{ message }}
+        <div class="rounded-lg px-4 py-3 shadow-lg border {% if message.tags == 'success' %}bg-gray-900 text-white border-gray-800{% elif message.tags == 'error' %}bg-black text-white border-red-800{% else %}bg-gray-900 text-white border-gray-800{% endif %}">
+            <p class="text-sm font-medium">{{ message }}</p>
         </div>
         {% endfor %}
     </div>
     {% endif %}
 
     <!-- Main Content -->
-    <main class="py-10">
+    <main class="{% if not hide_nav %}mt-16 md:mb-0 mb-16{% endif %}">
         {% block content %}{% endblock %}
     </main>
-
-    <!-- Footer -->
-    <footer class="bg-white border-t border-gray-200 mt-auto">
-        <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-            <p class="text-center text-gray-500 text-sm">
-                &copy; {% now "Y" %} Fisher's Portal. All rights reserved.
-            </p>
-        </div>
-    </footer>
 
     <!-- Custom JavaScript -->
     {% block extra_js %}{% endblock %}

@@ -6,113 +6,104 @@
 {% endblock %}
 
 {% block content %}
-<div class="mb-8">
-  <h1 class="text-3xl font-bold text-slate-800">Upload New Catch</h1>
-  <p class="text-slate-500 mt-1">Record your latest catch details</p>
-</div>
+<div class="max-w-3xl mx-auto py-12 px-6">
+  <!-- Page Header -->
+  <div class="mb-10 text-center">
+    <h1 class="text-4xl font-semibold text-white tracking-tight font-sans">Upload New Catch</h1>
+    <p class="text-gray-300 mt-2 text-sm font-light">Record your latest catch with all the details</p>
+    
+  </div>
 
-<div class="bg-white border border-slate-200 rounded-lg shadow-sm p-6 max-w-2xl">
-  <form method="post" enctype="multipart/form-data" class="space-y-6">
-    {% csrf_token %}
-    <!-- Fish Type -->
-    <div>
-      <label for="fish_type" class="block text-sm font-medium text-gray-700">Fish Type</label>
-      <select id="fish_type" name="fish_type" required class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-        <option value="">Select a fish type</option>
-        <option value="salmon">Salmon</option>
-        <option value="tuna">Tuna</option>
-        <option value="cod">Cod</option>
-        <option value="halibut">Halibut</option>
-      </select>
-    </div>
+  <!-- Form Card -->
+  <div class="bg-white border border-gray-200 rounded-2xl shadow-md p-8">
+    <form method="post" enctype="multipart/form-data" class="space-y-6">
+      {% csrf_token %}
 
-    <!-- Weight -->
-    <div>
-      <label for="weight" class="block text-sm font-medium text-gray-700">Weight (kg)</label>
-      <input type="number" step="0.1" id="weight" name="weight" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-    </div>
+      <!-- Fish Type -->
+      <div>
+        <label for="fish_type" class="block text-sm font-semibold text-gray-700">Fish Type</label>
+        <select id="fish_type" name="fish_type" required class="mt-2 block w-full bg-white border border-gray-300 text-gray-900 rounded-md shadow-sm focus:ring-black focus:border-black text-sm px-3 py-2">
+          <option value="">Select a fish type</option>
+          <option value="salmon">Salmon</option>
+          <option value="tuna">Tuna</option>
+          <option value="cod">Cod</option>
+          <option value="halibut">Halibut</option>
+        </select>
+      </div>
 
-    <!-- Quality Grade -->
-    <div>
-      <label for="quality_grade" class="block text-sm font-medium text-gray-700">Quality Grade</label>
-      <select id="quality_grade" name="quality_grade" required class="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm rounded-md">
-        <option value="">Select quality grade</option>
-        <option value="A">Premium</option>
-        <option value="B">Standard</option>
-        <option value="C">Economy</option>
-      </select>
-    </div>
+      <!-- Weight -->
+      <div>
+        <label for="weight" class="block text-sm font-semibold text-gray-700">Weight (kg)</label>
+        <input type="number" step="0.1" id="weight" name="weight" required class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black text-sm px-3 py-2 text-gray-900">
+      </div>
 
-    <!-- Location -->
-    <div>
-      <label for="location" class="block text-sm font-medium text-gray-700">Catch Location</label>
-      <input type="text" id="location" name="location" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-    </div>
+      <!-- Quality Grade -->
+      <div>
+        <label for="quality_grade" class="block text-sm font-semibold text-gray-700">Quality Grade</label>
+        <select id="quality_grade" name="quality_grade" required class="mt-2 block w-full bg-white border border-gray-300 text-gray-900 rounded-md shadow-sm focus:ring-black focus:border-black text-sm px-3 py-2">
+          <option value="">Select quality grade</option>
+          <option value="A">Premium</option>
+          <option value="B">Standard</option>
+          <option value="C">Economy</option>
+        </select>
+      </div>
 
-    <!-- Price -->
-    <div>
-      <label for="price_per_kg" class="block text-sm font-medium text-gray-700">Price per kg ($)</label>
-      <input type="number" step="0.01" id="price_per_kg" name="price_per_kg" required class="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500 sm:text-sm">
-    </div>
+      <!-- Location -->
+      <div>
+        <label for="location" class="block text-sm font-semibold text-gray-700">Catch Location</label>
+        <input type="text" id="location" name="location" required class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black text-sm px-3 py-2 text-gray-900">
+      </div>
 
-    <!-- Photos -->
-    <div>
-      <label for="photo" class="block text-sm font-medium text-gray-700">Photos</label>
-      <div class="mt-1 flex justify-center px-6 pt-5 pb-6 border-2 border-gray-300 border-dashed rounded-md">
-        <div class="space-y-1 text-center">
-          <svg class="mx-auto h-12 w-12 text-gray-400" stroke="currentColor" fill="none" viewBox="0 0 48 48">
-            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+      <!-- Price -->
+      <div>
+        <label for="price_per_kg" class="block text-sm font-semibold text-gray-700">Price per kg ($)</label>
+        <input type="number" step="0.01" id="price_per_kg" name="price_per_kg" required class="mt-2 block w-full border-gray-300 rounded-md shadow-sm focus:ring-black focus:border-black text-sm px-3 py-2 text-gray-900">
+      </div>
+
+      <!-- Photo Upload -->
+      <div>
+        <label for="photo" class="block text-sm font-semibold text-gray-700 mb-2">Upload Photo</label>
+        <div class="border-2 border-dashed border-gray-300 rounded-lg p-6 text-center transition-all duration-200 hover:border-black hover:bg-gray-50" id="drop-zone">
+          <svg class="mx-auto h-10 w-10 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 48 48">
+            <path d="M28 8H12a4 4 0 00-4 4v20m32-12v8v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28l4 4m4-24h8m-4-4v8m-12 4h.02" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
           </svg>
-          <div class="flex text-sm text-gray-600">
-            <label for="photo" class="relative cursor-pointer bg-white rounded-md font-medium text-blue-600 hover:text-blue-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-blue-500">
-              <span>Upload a file</span>
-              <input id="photo" name="photo" type="file" accept="image/*" class="sr-only" required>
-            </label>
-            <p class="pl-1">or drag and drop</p>
-          </div>
-          <p class="text-xs text-gray-500">PNG, JPG, GIF up to 10MB</p>
+          <p class="mt-2 text-sm text-gray-600">Drag & drop or <label for="photo" class="text-black font-medium underline cursor-pointer">click to upload</label></p>
+          <p class="mt-1 text-xs text-gray-400" id="file-name">PNG, JPG, GIF up to 10MB</p>
+          <input id="photo" name="photo" type="file" accept="image/*" class="sr-only" required>
         </div>
       </div>
-    </div>
 
-    <!-- Submit Button -->
-    <div class="flex justify-end">
-      <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500">
-        Upload Catch
-      </button>
-    </div>
-  </form>
+      <!-- Submit -->
+      <div class="pt-4 text-right">
+        <button type="submit" class="inline-flex items-center px-5 py-2 bg-black text-white text-sm font-semibold rounded-md shadow hover:bg-gray-800 transition">
+          Upload Catch
+        </button>
+      </div>
+    </form>
+  </div>
 </div>
 
 <script>
-// Add drag and drop functionality
-const dropZone = document.querySelector('.border-dashed');
+const dropZone = document.getElementById('drop-zone');
 const fileInput = document.getElementById('photo');
+const fileNameDisplay = document.getElementById('file-name');
 
 ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
   dropZone.addEventListener(eventName, preventDefaults, false);
 });
 
-function preventDefaults (e) {
+function preventDefaults(e) {
   e.preventDefault();
   e.stopPropagation();
 }
 
 ['dragenter', 'dragover'].forEach(eventName => {
-  dropZone.addEventListener(eventName, highlight, false);
+  dropZone.classList.add('border-black', 'bg-gray-100');
 });
 
 ['dragleave', 'drop'].forEach(eventName => {
-  dropZone.addEventListener(eventName, unhighlight, false);
+  dropZone.classList.remove('border-black', 'bg-gray-100');
 });
-
-function highlight(e) {
-  dropZone.classList.add('border-blue-500', 'bg-blue-50');
-}
-
-function unhighlight(e) {
-  dropZone.classList.remove('border-blue-500', 'bg-blue-50');
-}
 
 dropZone.addEventListener('drop', handleDrop, false);
 
@@ -120,15 +111,16 @@ function handleDrop(e) {
   const dt = e.dataTransfer;
   const files = dt.files;
   fileInput.files = files;
+  if (files.length > 0) {
+    fileNameDisplay.textContent = `Selected: ${files[0].name}`;
+  }
 }
 
-// Show selected file name
-fileInput.addEventListener('change', function(e) {
+fileInput.addEventListener('change', function (e) {
   const fileName = e.target.files[0]?.name;
   if (fileName) {
-    const fileNameDisplay = dropZone.querySelector('p.text-xs');
     fileNameDisplay.textContent = `Selected: ${fileName}`;
   }
 });
 </script>
-{% endblock %} 
+{% endblock %}
