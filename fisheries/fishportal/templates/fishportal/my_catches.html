@@ -3,6 +3,7 @@
 {% load fishportal_filters %}
 
 {% block content %}
+<<<<<<< Updated upstream
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
     <!-- Header -->
     <div class="text-center mb-12">
@@ -78,9 +79,52 @@
                     <div class="flex justify-between text-sm">
                         <span class="text-gray-400">Total Sale</span>
                         <span class="text-green-400 font-medium">${{ catch.price_per_kg|multiply:catch.weight|floatformat:2 }}</span>
-                    </div>
-                    {% endif %}
+=======
+<div class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+    <!-- Page Header -->
+    <div class="flex items-center justify-between mb-8">
+        <div>
+            <h1 class="text-3xl font-light text-white">My Catches</h1>
+            <p class="text-sm text-gray-400 mt-1">Manage your uploaded catches</p>
+        </div>
+        <a href="{% url 'fishportal:upload_catch' %}" 
+           class="px-4 py-2 bg-white text-black rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+            Upload New Catch
+        </a>
+    </div>
+
+    <!-- Catches Grid -->
+    <div class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+        {% for catch in catches %}
+        <div class="bg-gray-900 overflow-hidden rounded-lg border border-gray-800 hover:border-gray-700 transition-colors">
+            <div class="p-6">
+                <div class="flex justify-between items-start">
+                    <h3 class="text-lg font-medium text-white">{{ catch.fish_type }}</h3>
+                    <span class="px-2 py-1 text-xs font-medium rounded-full {% if catch.status == 'Available' %}bg-green-900 text-green-200{% else %}bg-yellow-900 text-yellow-200{% endif %}">
+                        {{ catch.status }}
+                    </span>
                 </div>
+                
+                <div class="mt-4 space-y-2 text-sm text-gray-400">
+                    <div class="flex justify-between">
+                        <span>Quality</span>
+                        <span class="text-white">{{ catch.quality_grade }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Weight</span>
+                        <span class="text-white">{{ catch.weight }} kg</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Price per kg</span>
+                        <span class="text-white">Rs {{ catch.price_per_kg }}</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>Location</span>
+                        <span class="text-white">{{ catch.location }}</span>
+>>>>>>> Stashed changes
+                    </div>
+                </div>
+<<<<<<< Updated upstream
                 
                 <!-- Actions -->
                 {% if not catch.is_sold %}
@@ -101,11 +145,23 @@
                             Delete
                         </button>
                     </form>
+=======
+
+                <div class="mt-6 flex space-x-3">
+                    <a href="{% url 'fishportal:edit_catch' catch.id %}" 
+                       class="flex-1 px-4 py-2 bg-gray-800 text-white rounded-lg text-sm font-medium hover:bg-gray-700 transition-colors text-center">
+                        Edit
+                    </a>
+                    <button type="button" onclick="deleteCatch({{ catch.id }})"
+                            class="px-4 py-2 border border-gray-700 text-gray-300 rounded-lg text-sm font-medium hover:text-white hover:border-gray-600 transition-colors">
+                        Delete
+                    </button>
+>>>>>>> Stashed changes
                 </div>
-                {% endif %}
             </div>
         </div>
         {% empty %}
+<<<<<<< Updated upstream
         <div class="col-span-full">
             <div class="text-center py-16 px-4 rounded-xl border border-gray-800 bg-white bg-opacity-5 backdrop-blur-sm">
                 <svg class="mx-auto h-12 w-12 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -116,11 +172,24 @@
                 <a href="{% url 'fishportal:upload_catch' %}" 
                    class="mt-6 inline-flex items-center px-6 py-3 bg-white text-black font-medium rounded-lg hover:bg-gray-100 transition-colors duration-200">
                     Upload New Catch
+=======
+        <div class="col-span-full text-center py-12 bg-gray-900 rounded-lg border border-gray-800">
+            <svg class="mx-auto h-12 w-12 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9.172 16.172a4 4 0 015.656 0M9 10h.01M15 10h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+            </svg>
+            <h3 class="mt-2 text-sm font-medium text-white">No catches yet</h3>
+            <p class="mt-1 text-sm text-gray-400">Get started by uploading your first catch.</p>
+            <div class="mt-6">
+                <a href="{% url 'fishportal:upload_catch' %}" 
+                   class="inline-flex items-center px-4 py-2 bg-white text-black rounded-lg text-sm font-medium hover:bg-gray-100 transition-colors">
+                    Upload Catch
+>>>>>>> Stashed changes
                 </a>
             </div>
         </div>
         {% endfor %}
     </div>
+<<<<<<< Updated upstream
 
     <!-- Pagination -->
     {% if catches.has_other_pages %}
@@ -150,5 +219,25 @@
         </nav>
     </div>
     {% endif %}
+=======
+>>>>>>> Stashed changes
 </div>
+
+<script>
+function deleteCatch(catchId) {
+    if (confirm('Are you sure you want to delete this catch?')) {
+        // Send DELETE request to backend
+        fetch(`/fisher/delete-catch/${catchId}/`, {
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': document.querySelector('[name=csrfmiddlewaretoken]').value
+            }
+        }).then(response => {
+            if (response.ok) {
+                window.location.reload();
+            }
+        });
+    }
+}
+</script>
 {% endblock %} 

@@ -1,7 +1,9 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, redirect
 from django.contrib.auth.decorators import login_required
 from django.utils.decorators import method_decorator
 from django.views.generic import TemplateView
+from django.http import JsonResponse
+from django.views.decorators.http import require_http_methods
 
 @method_decorator(login_required, name='dispatch')
 class HomeView(TemplateView):
@@ -15,6 +17,35 @@ class HomeView(TemplateView):
             'active_listings': 12,
             'rating': 4.8,
         })
+        return context
+
+@method_decorator(login_required, name='dispatch')
+class MyCatchesView(TemplateView):
+    template_name = 'fishportal/my_catches.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # Add sample data for my catches
+        context['catches'] = [
+            {
+                'id': 1,
+                'fish_type': 'Salmon',
+                'weight': 25,
+                'quality_grade': 'Premium',
+                'price_per_kg': 45,
+                'location': 'North Pacific',
+                'status': 'Available',
+            },
+            {
+                'id': 2,
+                'fish_type': 'Tuna',
+                'weight': 40,
+                'quality_grade': 'Grade A',
+                'price_per_kg': 35,
+                'location': 'South Pacific',
+                'status': 'Reserved',
+            },
+        ]
         return context
 
 @method_decorator(login_required, name='dispatch')
@@ -115,8 +146,35 @@ class PricingTrendsView(TemplateView):
         ]
         return context
 
+@method_decorator(login_required, name='dispatch')
+class EditCatchView(TemplateView):
+    template_name = 'fishportal/edit_catch.html'
+    
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        catch_id = self.kwargs.get('catch_id')
+        # For now, return sample data. In production, this would fetch from database
+        context['catch'] = {
+            'id': catch_id,
+            'fish_type': 'Salmon',
+            'weight': 25,
+            'quality_grade': 'Premium',
+            'price_per_kg': 45,
+            'location': 'North Pacific',
+            'status': 'Available',
+        }
+        return context
+
+@require_http_methods(["DELETE"])
+@login_required
+def delete_catch(request, catch_id):
+    # For now, just return success. In production, this would delete from database
+    return JsonResponse({'status': 'success'})
+
 # Function-based views for URL patterns
 home = HomeView.as_view()
+my_catches = MyCatchesView.as_view()
 upload_catch = UploadCatchView.as_view()
+edit_catch = EditCatchView.as_view()
 inventory = InventoryView.as_view()
 pricing_trends = PricingTrendsView.as_view()
